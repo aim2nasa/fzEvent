@@ -10,6 +10,8 @@
 static char* SERVER_HOST = "127.0.0.1";
 static u_short SERVER_PORT = 19002;
 
+ssize_t sendCmd(ACE_SOCK_Stream& stream, unsigned int cmdCode);
+
 int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 	ACE_TRACE(ACE_TEXT("main"));
@@ -32,28 +34,18 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	CEvtRcv er(&client_stream);
 	er.activate();
 
-	//Do something
-	unsigned int cmdCode;
-	ssize_t nSent=0;
 	for(int i=0;i<3;i++){
-		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_START;
-		nSent = client_stream.send_n(&cmdCode, sizeof(unsigned int));
-		ACE_ASSERT(nSent == sizeof(unsigned int));
+		sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_START);
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
 
 		ACE_OS::sleep(5);
 
-		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_STOP;
-		client_stream.send_n(&cmdCode, sizeof(unsigned int));
-		ACE_ASSERT(nSent == sizeof(unsigned int));
+		sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_STOP);
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
-
 		ACE_OS::sleep(1);
 	}
-	cmdCode = CONTROL_MESSAGE_TERMINATE;
-	client_stream.send_n(&cmdCode, sizeof(unsigned int));
-	ACE_ASSERT(nSent == sizeof(unsigned int));
-	ACE_DEBUG((LM_DEBUG, "(%P|%t) Terminate server\n"));
+	sendCmd(client_stream, CONTROL_MESSAGE_TERMINATE);
+	ACE_DEBUG((LM_DEBUG, "(%P|%t) terminate server\n"));
 
 	if (client_stream.close() == -1)
 		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "close"), -1);
@@ -61,4 +53,11 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 	ACE_DEBUG((LM_INFO, ACE_TEXT("(%t) end\n")));
 	ACE_RETURN(0);
+}
+
+ssize_t sendCmd(ACE_SOCK_Stream& stream,unsigned int cmdCode)
+{
+	ssize_t nSent = stream.send_n(&cmdCode, sizeof(unsigned int));
+	ACE_ASSERT(nSent == sizeof(unsigned int));
+	return nSent;
 }
