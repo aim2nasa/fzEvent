@@ -36,15 +36,15 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	CEvtRcv er(&client_stream);
 	er.activate();
 
-	static char ch;
+	char inpBuff[128];
 	bool bRun = true;
 	while (bRun)
 	{
 		std::cout<<std::endl<< "* Event Record Start[r] Event Record Stop:[s] Terminate Server[t]" << std::endl;
-		std::cin >> &ch;
-		std::cout << "Choice:" << ch << std::endl;
+		std::cin >> inpBuff;
+		std::cout << "Choice:" << inpBuff << std::endl;
 
-		switch (ch)
+		switch (inpBuff[0])
 		{
 		case 'r':
 			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_START) != sizeof(unsigned int))
