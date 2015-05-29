@@ -1,8 +1,8 @@
 #include "CEvtRcv.h"
 #include "ace/SOCK_Stream.h"
 
-CEvtRcv::CEvtRcv()
-	:_pStream(NULL)
+CEvtRcv::CEvtRcv(ACE_SOCK_Stream* p)
+	:_pStream(p)
 {
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) CEvtRcv Constructor\n")));
 }
