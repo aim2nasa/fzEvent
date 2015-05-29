@@ -40,7 +40,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	bool bRun = true;
 	while (bRun)
 	{
-		std::cout<<std::endl<< "* Event Record Start[r] Event Record Stop:[s] Terminate Server[t]" << std::endl;
+		std::cout<<std::endl<< "* Event Record Start[r] Event Record Stop:[t] Terminate Server[x]" << std::endl;
 		std::cin >> inpBuff;
 		std::cout << "Choice:" << inpBuff << std::endl;
 
@@ -51,12 +51,12 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_START)"), -1);
 			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
 			break;
-		case 's':
+		case 't':
 			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_STOP) != sizeof(unsigned int))
 				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_STOP)"), -1);
 			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
 			break;
-		case 't':
+		case 'x':
 			bRun = false;
 			sendCmd(client_stream, CONTROL_MESSAGE_TERMINATE);
 			ACE_DEBUG((LM_DEBUG, "(%P|%t) terminate server\n"));
