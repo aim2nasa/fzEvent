@@ -2,6 +2,7 @@
 #include "ace/Log_Msg.h" 
 #include "ace/OS.h"
 #include "CEvtRcv.h"
+#include <iostream>
 
 #define CONTROL_MESSAGE_EVENT_RECORD_START	(0x00020001)
 #define CONTROL_MESSAGE_EVENT_RECORD_STOP	(0x00020002)
@@ -31,25 +32,39 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	else
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
 
+	ACE_OS::sleep(2);
 	CEvtRcv er(&client_stream);
 	er.activate();
 
-	for(int i=0;i<3;i++){
-		if(sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_START)!=sizeof(unsigned int))
-			ACE_ERROR_RETURN((LM_ERROR,"(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_START)"),-1);
+	static char ch;
+	bool bRun = true;
+	while (bRun)
+	{
+		std::cout<<std::endl<< "* Event Record Start[r] Event Record Stop:[s] Terminate Server[t]" << std::endl;
+		std::cin >> &ch;
+		std::cout << "Choice:" << ch << std::endl;
 
-		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
-
-		ACE_OS::sleep(5);
-
-		if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_STOP) != sizeof(unsigned int))
-			ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_STOP)"), -1);
-
-		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
-		ACE_OS::sleep(1);
+		switch (ch)
+		{
+		case 'r':
+			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_START) != sizeof(unsigned int))
+				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_START)"), -1);
+			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
+			break;
+		case 's':
+			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_STOP) != sizeof(unsigned int))
+				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_STOP)"), -1);
+			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
+			break;
+		case 't':
+			bRun = false;
+			sendCmd(client_stream, CONTROL_MESSAGE_TERMINATE);
+			ACE_DEBUG((LM_DEBUG, "(%P|%t) terminate server\n"));
+			break;
+		default:
+			break;
+		}
 	}
-	sendCmd(client_stream, CONTROL_MESSAGE_TERMINATE);
-	ACE_DEBUG((LM_DEBUG, "(%P|%t) terminate server\n"));
 
 	if (client_stream.close() == -1)
 		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "close"), -1);
