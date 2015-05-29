@@ -35,18 +35,21 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_START;
 		nSent = client_stream.send_n(&cmdCode, sizeof(unsigned int));
 		ACE_ASSERT(nSent == sizeof(unsigned int));
+		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
 
 		ACE_OS::sleep(5);
 
 		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_STOP;
 		client_stream.send_n(&cmdCode, sizeof(unsigned int));
 		ACE_ASSERT(nSent == sizeof(unsigned int));
+		ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
 
 		ACE_OS::sleep(1);
 	}
 	cmdCode = CONTROL_MESSAGE_TERMINATE;
 	client_stream.send_n(&cmdCode, sizeof(unsigned int));
 	ACE_ASSERT(nSent == sizeof(unsigned int));
+	ACE_DEBUG((LM_DEBUG, "(%P|%t) Terminate server\n"));
 
 	if (client_stream.close() == -1)
 		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "close"), -1);
