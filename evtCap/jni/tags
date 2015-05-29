@@ -1,0 +1,307 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+APP_STL	Android.mk	/^APP_STL:=gnustl_static$/;"	m
+CAPTURE_SKIP_QUEUE_SIZE	main.cpp	224;"	d	file:
+CONTROL_MESSAGE_CAPTURE_IMMEDIATELY	common/fz_common.h	26;"	d
+CONTROL_MESSAGE_CAPTURE_START	common/fz_common.h	24;"	d
+CONTROL_MESSAGE_CAPTURE_STOP	common/fz_common.h	25;"	d
+CONTROL_MESSAGE_EVENT_PLAY_START	common/fz_common.h	29;"	d
+CONTROL_MESSAGE_EVENT_PLAY_STEP	common/fz_common.h	31;"	d
+CONTROL_MESSAGE_EVENT_PLAY_STOP	common/fz_common.h	30;"	d
+CONTROL_MESSAGE_EVENT_RECORD_START	common/fz_common.h	27;"	d
+CONTROL_MESSAGE_EVENT_RECORD_STOP	common/fz_common.h	28;"	d
+CONTROL_MESSAGE_TERMINATE	common/fz_common.h	32;"	d
+DDMS_RAWIMAGE_VERSION	capture/surface_getter.h	47;"	d
+DEFAULT_DEVICE_PATH	event/event_getter.h	29;"	d
+DEFAULT_ID_MAP_SIZE	event/event_getter.h	333;"	d
+DEFAULT_LISTEN_PORT	main.cpp	25;"	d	file:
+DEFAULT_OUTPUT_FILENAME	event/event_getter.h	31;"	d
+DEFAULT_OUTPUT_PATH	event/event_getter.h	30;"	d
+EVENT_FILE_PATH	main.cpp	418;"	d	file:
+FZ_BEGIN	common/fz_common.h	231;"	d
+FZ_END	common/fz_common.h	232;"	d
+FZ_LOG_DEBUG	common/fz_trace.h	/^		FZ_LOG_DEBUG = 8,$/;"	e	enum:__anon6::LOG_LEVEL
+FZ_LOG_DEFAULT	common/fz_trace.h	/^		FZ_LOG_DEFAULT = 1,$/;"	e	enum:__anon6::LOG_LEVEL
+FZ_LOG_ERROR	common/fz_trace.h	/^		FZ_LOG_ERROR = 4,$/;"	e	enum:__anon6::LOG_LEVEL
+FZ_LOG_INFO	common/fz_trace.h	/^		FZ_LOG_INFO = 2,$/;"	e	enum:__anon6::LOG_LEVEL
+GET_ELAPSED_TIME___	capture/surface_getter.h	19;"	d
+GET_ELAPSED_TIME___	capture/surface_getter.h	27;"	d
+LABEL	event/getevent.h	8;"	d
+LABEL_END	event/getevent.h	9;"	d
+LOCAL_LDFLAGS	Android.mk	/^LOCAL_LDFLAGS:=-fPIE -pie $/;"	m
+LOCAL_MODULE	Android.mk	/^LOCAL_MODULE:= dmt $/;"	m
+LOCAL_PATH	Android.mk	/^LOCAL_PATH:=$(call my-dir)$/;"	m
+LOCAL_SRC_FILES	Android.mk	/^LOCAL_SRC_FILES:=\\$/;"	m
+LOG_LEVEL	common/fz_trace.h	/^	enum LOG_LEVEL{$/;"	g	namespace:__anon6
+PACKET_TYPE_CAPTURE	common/fz_common.h	35;"	d
+PACKET_TYPE_CONTROL	common/fz_common.h	37;"	d
+PACKET_TYPE_EVENT	common/fz_common.h	36;"	d
+PACKET_TYPE_MASK	common/fz_common.h	34;"	d
+PACKET_TYPE_RESERVED1	common/fz_common.h	38;"	d
+PARSE_CON	event/event_getter.h	/^			PARSE_CON = 1,$/;"	e	enum:event_getter::PARSE_INFO
+PARSE_END	event/event_getter.h	/^			PARSE_END = 0x8fffffff,$/;"	e	enum:event_getter::PARSE_INFO
+PARSE_INFO	event/event_getter.h	/^		enum PARSE_INFO{ $/;"	g	class:event_getter
+PARSE_SKIP	event/event_getter.h	/^			PARSE_SKIP = 2,$/;"	e	enum:event_getter::PARSE_INFO
+PARSE_START	event/event_getter.h	/^			PARSE_START = 0,$/;"	e	enum:event_getter::PARSE_INFO
+PATH_MAX	event/event_getter.h	26;"	d
+PRINT_ALL_INFO	event/event_getter.h	/^			PRINT_ALL_INFO          = (1U << 8) - 1,$/;"	e	enum:event_getter::__anon7
+PRINT_DEVICE	event/event_getter.h	/^			PRINT_DEVICE            = 1U << 1,$/;"	e	enum:event_getter::__anon7
+PRINT_DEVICE_ERRORS	event/event_getter.h	/^			PRINT_DEVICE_ERRORS     = 1U << 0,$/;"	e	enum:event_getter::__anon7
+PRINT_DEVICE_INFO	event/event_getter.h	/^			PRINT_DEVICE_INFO       = 1U << 3,$/;"	e	enum:event_getter::__anon7
+PRINT_DEVICE_NAME	event/event_getter.h	/^			PRINT_DEVICE_NAME       = 1U << 2,$/;"	e	enum:event_getter::__anon7
+PRINT_HID_DESCRIPTOR	event/event_getter.h	/^			PRINT_HID_DESCRIPTOR    = 1U << 7,$/;"	e	enum:event_getter::__anon7
+PRINT_INPUT_PROPS	event/event_getter.h	/^			PRINT_INPUT_PROPS       = 1U << 6,$/;"	e	enum:event_getter::__anon7
+PRINT_LABELS	event/event_getter.h	/^			PRINT_LABELS            = 1U << 16,$/;"	e	enum:event_getter::__anon7
+PRINT_POSSIBLE_EVENTS	event/event_getter.h	/^			PRINT_POSSIBLE_EVENTS   = 1U << 5,$/;"	e	enum:event_getter::__anon7
+PRINT_VERSION	event/event_getter.h	/^			PRINT_VERSION           = 1U << 4,$/;"	e	enum:event_getter::__anon7
+RUNNING_EVENT_PLAY	main.cpp	/^		RUNNING_EVENT_PLAY			= 0x00000200,$/;"	e	enum:__anon8::RUNNING_MODE	file:
+RUNNING_EVENT_RECORD	main.cpp	/^		RUNNING_EVENT_RECORD		= 0x00000100,$/;"	e	enum:__anon8::RUNNING_MODE	file:
+RUNNING_MODE	main.cpp	/^	enum RUNNING_MODE {$/;"	g	namespace:__anon8	file:
+RUNNING_SCREEN_CAPTURE	main.cpp	/^		RUNNING_SCREEN_CAPTURE		= 0x00000010,$/;"	e	enum:__anon8::RUNNING_MODE	file:
+RUNNING_WAIT	main.cpp	/^		RUNNING_WAIT				= 0x00000000,$/;"	e	enum:__anon8::RUNNING_MODE	file:
+START_TIMER___	capture/surface_getter.h	17;"	d
+START_TIMER___	capture/surface_getter.h	25;"	d
+STOP_TIMER___	capture/surface_getter.h	18;"	d
+STOP_TIMER___	capture/surface_getter.h	26;"	d
+TRACE	common/fz_trace.h	/^static void TRACE(LOG_LEVEL lv, const char *fmt, ...) $/;"	f
+USE_FZ_TRACE	common/fz_trace.h	9;"	d
+_NODE_LOCK	common/fz_common.h	76;"	d
+_NODE_TRYLOCK	common/fz_common.h	78;"	d
+_NODE_UNLOCK	common/fz_common.h	77;"	d
+___EVENT_GETTER_H	event/event_getter.h	2;"	d
+___EVENT_PLAYER_H	event/event_player.h	2;"	d
+___FZINFO_H	capture/fbinfo.h	2;"	d
+___FZ_COMMON_H	common/fz_common.h	2;"	d
+___FZ_TCP_SERVER_H	common/fz_tcp_server.h	2;"	d
+___FZ_TRACE_H	common/fz_trace.h	2;"	d
+___SURFACE_GETTER_H	capture/surface_getter.h	2;"	d
+_container	common/fz_common.h	/^					_container(const _container& rhs)$/;"	f	struct:fz::qlist::node::_container
+_container	common/fz_common.h	/^					_container(void* data, const _u32 len)$/;"	f	struct:fz::qlist::node::_container
+_container	common/fz_common.h	/^				struct _container {$/;"	s	struct:fz::qlist::node
+_event_id_map	event/event_getter.h	/^			_event_id_map() : slot_count(0) {$/;"	f	struct:event_getter::_event_id_map
+_event_id_map	event/event_getter.h	/^		struct _event_id_map {$/;"	s	class:event_getter
+_get_raw_buffer	capture/surface_getter.h	/^		void _get_raw_buffer(_u8* p, FILE* fp){$/;"	f	class:surface_getter
+_get_surface_direct_access	capture/surface_getter.h	/^		int _get_surface_direct_access() {$/;"	f	class:surface_getter
+_get_surface_info	capture/surface_getter.h	/^		int _get_surface_info(const int width, const int height, const int format) {$/;"	f	class:surface_getter
+_get_surface_screencap_access	capture/surface_getter.h	/^		int _get_surface_screencap_access() {$/;"	f	class:surface_getter
+_pair	event/event_getter.h	/^				_pair(_u32 _slot = 0xffffffff, _u32 _value = 0xffffffff) $/;"	f	struct:event_getter::_event_id_map::_pair
+_pair	event/event_getter.h	/^			struct _pair {$/;"	s	struct:event_getter::_event_id_map
+_s16	common/fz_common.h	/^	typedef signed short _s16;$/;"	t	namespace:fz
+_s32	common/fz_common.h	/^	typedef signed int _s32;$/;"	t	namespace:fz
+_s8	common/fz_common.h	/^	typedef signed char _s8;$/;"	t	namespace:fz
+_u16	common/fz_common.h	/^	typedef unsigned short _u16;$/;"	t	namespace:fz
+_u32	common/fz_common.h	/^	typedef unsigned int _u32;$/;"	t	namespace:fz
+_u8	common/fz_common.h	/^	typedef unsigned char _u8;$/;"	t	namespace:fz
+abs_labels	event/getevent.h	/^static struct label abs_labels[] = {$/;"	v	typeref:struct:label
+add	event/event_getter.h	/^				void add(const struct timeval& _tv, $/;"	f	struct:event_getter::event_info
+add_touch_id	event/event_getter.h	/^			void add_touch_id(const _u32 _value) {$/;"	f	struct:event_getter::_event_id_map
+addr	common/fz_tcp_server.h	/^		sockaddr_in addr;$/;"	m	class:tcp_server
+alpha_length	capture/fbinfo.h	/^	_u32 alpha_length;$/;"	m	struct:fbinfo
+alpha_offset	capture/fbinfo.h	/^	_u32 alpha_offset;$/;"	m	struct:fbinfo
+bind_socket	common/fz_tcp_server.h	/^		int bind_socket() {$/;"	f	class:tcp_server
+blue_length	capture/fbinfo.h	/^	_u32 blue_length;$/;"	m	struct:fbinfo
+blue_offset	capture/fbinfo.h	/^	_u32 blue_offset;$/;"	m	struct:fbinfo
+body	common/fz_common.h	/^		_u8* body;$/;"	m	struct:fz::packet_header
+bpp	capture/fbinfo.h	/^	_u32 bpp;$/;"	m	struct:fbinfo
+change_current_touch_id	event/event_getter.h	/^			const int change_current_touch_id(const _u32 _i) {$/;"	f	struct:event_getter::_event_id_map
+check_discard_event	event/event_getter.h	/^		bool check_discard_event(_u16 code) {$/;"	f	class:event_getter
+check_send_queue_max	main.cpp	/^	bool check_send_queue_max(){$/;"	f	namespace:__anon8
+clear	event/event_getter.h	/^				void clear() {$/;"	f	struct:event_getter::event_info
+clear	event/event_getter.h	/^			void clear() {$/;"	f	struct:event_getter::_event_id_map
+client_addr	common/fz_tcp_server.h	/^		sockaddr_in client_addr;$/;"	m	class:tcp_server
+client_sock	common/fz_tcp_server.h	/^		int client_sock;$/;"	m	class:tcp_server
+close_device	event/event_getter.h	/^		int close_device(const char *device, int print_flags)$/;"	f	class:event_getter
+close_event_file	event/event_player.h	/^		int close_event_file() {$/;"	f	class:event_player
+code	event/event_getter.h	/^				_u16* code;$/;"	m	struct:event_getter::event_info
+compress_buffer	capture/surface_getter.h	/^		_u8* compress_buffer;$/;"	m	class:surface_getter
+compress_level	capture/surface_getter.h	/^		int compress_level;$/;"	m	class:surface_getter
+container	common/fz_common.h	/^				} *container;$/;"	m	struct:fz::qlist::node	typeref:struct:fz::qlist::node::_container
+conv_image_bpp	capture/surface_getter.h	/^		int conv_image_bpp(_u8* src, _u8* dest, const _u16 w, const _u16 h, _u32 src_bpp, _u32 dest_bpp) {$/;"	f	class:surface_getter
+count	common/fz_common.h	/^			_u32 count;$/;"	m	class:fz::qlist
+count	event/event_getter.h	/^				_u32 count;$/;"	m	struct:event_getter::event_info
+current_slot	event/event_getter.h	/^			_u32 current_slot;$/;"	m	struct:event_getter::_event_id_map
+data_	common/fz_common.h	/^					void*	data_;$/;"	m	struct:fz::qlist::node::_container
+debug_level	common/fz_trace.h	/^	const int debug_level = $/;"	m	namespace:__anon6
+debug_print	event/event_getter.h	/^		int debug_print;$/;"	m	class:event_getter
+destroy	capture/surface_getter.h	/^		int destroy() {$/;"	f	class:surface_getter
+destroy	common/fz_common.h	/^			void destroy() {$/;"	f	class:fz::qlist
+destroy	common/fz_tcp_server.h	/^		int destroy() {$/;"	f	class:tcp_server
+destroy	event/event_getter.h	/^		int destroy(){$/;"	f	class:event_getter
+destroy	event/event_player.h	/^		int destroy() {$/;"	f	class:event_player
+destroy_event_list	event/event_player.cpp	/^int destroy_event_list() {$/;"	f
+dev_id	event/event_getter.h	/^				_s32 dev_id;$/;"	m	struct:event_getter::event_info
+device_names	event/event_getter.h	/^		char **device_names;$/;"	m	class:event_getter
+device_path	event/event_getter.h	/^		char* device_path;$/;"	m	class:event_getter
+dump_file	capture/surface_getter.h	/^	static void dump_file(const char* name, const void* p, const fz::_u32 len)$/;"	f	namespace:__anon1
+e	event/event_player.h	/^	struct input_event* e;$/;"	m	struct:event_list	typeref:struct:event_list::input_event
+eg	main.cpp	/^	event_getter	eg;$/;"	m	namespace:__anon8	file:
+ep	main.cpp	/^	event_player	ep;$/;"	m	namespace:__anon8	file:
+ev_labels	event/getevent.h	/^static struct label ev_labels[] = {$/;"	v	typeref:struct:label
+event	event/event_getter.h	/^		struct input_event event;$/;"	m	class:event_getter	typeref:struct:event_getter::input_event
+event_count	event/event_player.h	/^	int event_count;$/;"	m	struct:event_list
+event_getter	event/event_getter.h	/^		event_getter(const char* _device_path = DEFAULT_DEVICE_PATH, $/;"	f	class:event_getter
+event_getter	event/event_getter.h	/^class event_getter {$/;"	c
+event_id_map	event/event_getter.h	/^		} event_id_map;$/;"	m	class:event_getter	typeref:struct:event_getter::_event_id_map
+event_info	event/event_getter.h	/^				event_info():count(0), tv(0), id(0), code(0), value(0) {}$/;"	f	struct:event_getter::event_info
+event_info	event/event_getter.h	/^		struct event_info {$/;"	s	class:event_getter
+event_list	event/event_player.h	/^	event_list():seq(-1), e(0){}$/;"	f	struct:event_list
+event_list	event/event_player.h	/^struct event_list {$/;"	s
+event_player	event/event_player.h	/^		event_player() : fd(0) {$/;"	f	class:event_player
+event_player	event/event_player.h	/^class event_player {$/;"	c
+event_type	event/event_getter.h	/^				_u16 event_type;$/;"	m	struct:event_getter::event_info
+fbi	capture/surface_getter.h	/^		struct fbinfo fbi;$/;"	m	class:surface_getter	typeref:struct:surface_getter::fbinfo
+fbinfo	capture/fbinfo.h	/^struct fbinfo {$/;"	s
+fd	event/event_player.h	/^		int fd;$/;"	m	class:event_player
+ff_labels	event/getevent.h	/^static struct label ff_labels[] = {$/;"	v	typeref:struct:label
+ff_status_labels	event/getevent.h	/^static struct label ff_status_labels[] = {$/;"	v	typeref:struct:label
+fz	common/fz_common.h	/^namespace fz{$/;"	n
+get	event/event_getter.h	/^				const struct event_info* get() const {$/;"	f	struct:event_getter::event_info
+get	event/event_getter.h	/^			const int get(const _u32 _value) {$/;"	f	struct:event_getter::_event_id_map
+get_buffer	capture/surface_getter.h	/^		int get_buffer(_u8** p, _u32* out_length, _u16* w, _u16* h) {$/;"	f	class:surface_getter
+get_buffer_option_compress	capture/surface_getter.h	/^		inline void get_buffer_option_compress(bool is_compress, int level = 1){$/;"	f	class:surface_getter
+get_buffer_option_resize	capture/surface_getter.h	/^		inline void get_buffer_option_resize(bool is_resize, int dest_w, int dest_h){$/;"	f	class:surface_getter
+get_count	event/event_getter.h	/^			const int get_count() const {$/;"	f	struct:event_getter::_event_id_map
+get_current_touch_id	event/event_getter.h	/^			_pair get_current_touch_id() {$/;"	f	struct:event_getter::_event_id_map
+get_event	event/event_getter.h	/^		int get_event(struct event_getter::event_info** _ei) {$/;"	f	class:event_getter
+get_event	main.cpp	/^	void* get_event(void* arg)$/;"	f	namespace:__anon8
+get_event_data	event/event_player.cpp	/^struct event_list* get_event_data(const int _seq) {$/;"	f
+get_label	event/event_getter.h	/^		const char* get_label(const struct label *labels, int value) {$/;"	f	class:event_getter
+get_running_mode	main.cpp	/^	_u32 get_running_mode(const _u32 _mask) {$/;"	f	namespace:__anon8
+get_surface	main.cpp	/^	void* get_surface(void* arg)$/;"	f	namespace:__anon8
+get_surface_immediately	main.cpp	/^	void* get_surface_immediately(void* arg) {$/;"	f	namespace:__anon8
+green_length	capture/fbinfo.h	/^	_u32 green_length;$/;"	m	struct:fbinfo
+green_offset	capture/fbinfo.h	/^	_u32 green_offset;$/;"	m	struct:fbinfo
+head	common/fz_common.h	/^					node* head;$/;"	m	struct:fz::qlist::__anon4::__anon5
+head	event/event_player.cpp	/^struct event_list* event_list::head = 0;$/;"	m	class:event_list	typeref:struct:event_list::	file:
+head	event/event_player.h	/^	static struct event_list* head;$/;"	m	struct:event_list	typeref:struct:event_list::event_list
+height	capture/fbinfo.h	/^	_u32 height;$/;"	m	struct:fbinfo
+height	common/fz_common.h	/^				_u16 height;$/;"	m	struct:fz::packet_header::__anon2::__anon3
+id	event/event_getter.h	/^				_s32* id;$/;"	m	struct:event_getter::event_info
+id	event/event_player.h	/^	int id;$/;"	m	struct:event_list
+init	capture/surface_getter.h	/^		int init() {$/;"	f	class:surface_getter
+init	common/fz_tcp_server.h	/^		int init(const int port) {$/;"	f	class:tcp_server
+init	event/event_getter.h	/^		int init(){$/;"	f	class:event_getter
+input_prop_labels	event/getevent.h	/^static struct label input_prop_labels[] = {$/;"	v	typeref:struct:label
+insert_event_list	event/event_player.cpp	/^int insert_event_list(int _id, int _event_count, struct input_event* _e) {$/;"	f
+is_compress_option	capture/surface_getter.h	/^		bool is_compress_option ;$/;"	m	class:surface_getter
+is_empty	common/fz_common.h	/^			bool is_empty()$/;"	f	class:fz::qlist
+is_get_surface_info	capture/surface_getter.h	/^		bool is_get_surface_info;$/;"	m	class:surface_getter
+is_initialize	common/fz_tcp_server.h	/^		bool is_initialize;$/;"	m	class:tcp_server
+is_resize_option	capture/surface_getter.h	/^		bool is_resize_option ;$/;"	m	class:surface_getter
+is_running	main.cpp	/^	bool is_running() {$/;"	f	namespace:__anon8
+key_labels	event/getevent.h	/^static struct label key_labels[] = {$/;"	v	typeref:struct:label
+key_value_labels	event/getevent.h	/^static struct label key_value_labels[] = {$/;"	v	typeref:struct:label
+label	event/getevent.h	/^struct label {$/;"	s
+led_labels	event/getevent.h	/^static struct label led_labels[] = {$/;"	v	typeref:struct:label
+len	common/fz_common.h	/^		_u32 len;$/;"	m	struct:fz::packet_body_surface
+len_	common/fz_common.h	/^					_u32	len_;$/;"	m	struct:fz::qlist::node::_container
+likely	common/fz_common.h	21;"	d
+main	capture/capture.cpp	/^int main(int argc, char** argv)$/;"	f
+main	main.cpp	/^int main(int argc, char** argv)$/;"	f
+make_event_packet	main.cpp	/^	_u8* make_event_packet(const struct fz::packet_header& _header,$/;"	f	namespace:__anon8
+make_socket	common/fz_tcp_server.h	/^		int make_socket() {$/;"	f	class:tcp_server
+make_surface_packet	main.cpp	/^	_u8* make_surface_packet(const struct fz::packet_header& _header,$/;"	f	namespace:__anon8
+msc_labels	event/getevent.h	/^static struct label msc_labels[] = {$/;"	v	typeref:struct:label
+mt_tool_labels	event/getevent.h	/^static struct label mt_tool_labels[] = {$/;"	v	typeref:struct:label
+name	event/getevent.h	/^    const char *name;$/;"	m	struct:label
+next	common/fz_common.h	/^				node* next;$/;"	m	struct:fz::qlist::node
+next	event/event_player.h	/^	event_list* next;$/;"	m	struct:event_list
+nfds	event/event_getter.h	/^		int nfds;$/;"	m	class:event_getter
+node	common/fz_common.h	/^			struct node {$/;"	s	class:fz::qlist
+node_lock_mutex	common/fz_common.h	/^			pthread_mutex_t node_lock_mutex;$/;"	m	class:fz::qlist
+offset	common/fz_common.h	/^		void* offset;$/;"	m	struct:fz::packet_body_surface
+open_device	event/event_getter.h	/^		int open_device(const char *device, int print_flags)$/;"	f	class:event_getter
+open_event_file	event/event_player.h	/^		int open_event_file(const char* _filename) {$/;"	f	class:event_player
+operator =	common/fz_common.h	/^					_container& operator = (const _container& rhs){$/;"	f	struct:fz::qlist::node::_container
+operator []	event/event_getter.h	/^			_u32& operator [] (const _u32 _slot) {$/;"	f	struct:event_getter::_event_id_map
+out_buffer	common/fz_trace.h	/^	FILE* out_buffer = stdout;$/;"	m	namespace:__anon6
+out_pixel_per_bytes	capture/surface_getter.h	/^		_u32 out_pixel_per_bytes;$/;"	m	class:surface_getter
+output_filename	event/event_getter.h	/^		char* output_filename;$/;"	m	class:event_getter
+output_path	event/event_getter.h	/^		char* output_path;$/;"	m	class:event_getter
+packet_body_event	common/fz_common.h	/^	struct packet_body_event {$/;"	s	namespace:fz
+packet_body_surface	common/fz_common.h	/^	struct packet_body_surface {$/;"	s	namespace:fz
+packet_header	common/fz_common.h	/^		packet_header(const _u16 _width, const _u16 _height){$/;"	f	struct:fz::packet_header
+packet_header	common/fz_common.h	/^		packet_header(const _u32 _type) {$/;"	f	struct:fz::packet_header
+packet_header	common/fz_common.h	/^	struct packet_header {$/;"	s	namespace:fz
+pair	event/event_getter.h	/^			} pair[DEFAULT_ID_MAP_SIZE]; $/;"	m	struct:event_getter::_event_id_map	typeref:struct:event_getter::_event_id_map::_pair
+parse_event	event/event_getter.h	/^		int parse_event(const struct input_event& event, struct event_info* ei){$/;"	f	class:event_getter
+play_event	event/event_player.h	/^		int play_event(const int _seq) {$/;"	f	class:event_player
+play_event	main.cpp	/^	void* play_event(void* arg)$/;"	f	namespace:__anon8
+pop	common/fz_common.h	/^			node::_container* pop() \/* with get data *\/$/;"	f	class:fz::qlist
+push	common/fz_common.h	/^			int push(void* _p, const _u32 _l) $/;"	f	class:fz::qlist
+qlist	common/fz_common.h	/^			qlist(): head(0), tail(0), count(0){$/;"	f	class:fz::qlist
+qlist	common/fz_common.h	/^	class qlist {$/;"	c	namespace:fz
+raw_buffer	capture/surface_getter.h	/^		_u8* raw_buffer;$/;"	m	class:surface_getter
+read_event	event/event_player.h	/^		int read_event() {$/;"	f	class:event_player
+read_notify	event/event_getter.h	/^		int read_notify(const char *dirname, int nfd, int print_flags)$/;"	f	class:event_getter
+recv_buffer	common/fz_tcp_server.h	/^		int recv_buffer(const void* p, _u32 len) {$/;"	f	class:tcp_server
+recv_packet	main.cpp	/^	void* recv_packet(void* arg)$/;"	f	namespace:__anon8
+red_length	capture/fbinfo.h	/^	_u32 red_length;$/;"	m	struct:fbinfo
+red_offset	capture/fbinfo.h	/^	_u32 red_offset;$/;"	m	struct:fbinfo
+rel_labels	event/getevent.h	/^static struct label rel_labels[] = {$/;"	v	typeref:struct:label
+remove_current_touch_id	event/event_getter.h	/^			void remove_current_touch_id() {$/;"	f	struct:event_getter::_event_id_map
+rep_labels	event/getevent.h	/^static struct label rep_labels[] = {$/;"	v	typeref:struct:label
+resize_buffer	capture/surface_getter.h	/^		_u8* resize_buffer;$/;"	m	class:surface_getter
+resize_h	capture/surface_getter.h	/^		int resize_h;$/;"	m	class:surface_getter
+resize_raw_image	capture/surface_getter.h	/^		int resize_raw_image(_u8* dest)$/;"	f	class:surface_getter
+resize_w	capture/surface_getter.h	/^		int resize_w;$/;"	m	class:surface_getter
+run	main.cpp	/^	int run() {$/;"	f	namespace:__anon8
+running	main.cpp	/^	bool running = true;$/;"	m	namespace:__anon8	file:
+running_mode	main.cpp	/^	_u32 running_mode = $/;"	m	namespace:__anon8	file:
+running_mode_mutex	main.cpp	/^	pthread_mutex_t running_mode_mutex;$/;"	m	namespace:__anon8	file:
+running_mutex	main.cpp	/^	pthread_mutex_t running_mutex;$/;"	m	namespace:__anon8	file:
+safe_free	common/fz_common.h	19;"	d
+scan_dir	event/event_getter.h	/^		int scan_dir(const char *dirname, int print_flags)$/;"	f	class:event_getter
+screencap_command	capture/surface_getter.h	/^		const char* screencap_command;$/;"	m	class:surface_getter
+send_buffer	common/fz_tcp_server.h	/^		int send_buffer(const void* p, _u32 len) {$/;"	f	class:tcp_server
+send_packet	main.cpp	/^	void* send_packet(void* arg)$/;"	f	namespace:__anon8
+send_queue	main.cpp	/^	qlist send_queue ;$/;"	m	namespace:__anon8	file:
+send_queue_size_max	main.cpp	/^	const _u32 send_queue_size_max = 50;$/;"	m	namespace:__anon8	file:
+seq	event/event_player.h	/^	int seq;$/;"	m	struct:event_list
+seq_number	event/event_player.cpp	/^int event_list::seq_number = 0;$/;"	m	class:event_list	file:
+seq_number	event/event_player.h	/^	static int seq_number;$/;"	m	struct:event_list
+set_dev_id	event/event_getter.h	/^				void set_dev_id(const _s32 _dev_id) {$/;"	f	struct:event_getter::event_info
+set_running_mode	main.cpp	/^	void set_running_mode(const RUNNING_MODE _r) {$/;"	f	namespace:__anon8
+set_running_state	main.cpp	/^	void set_running_state(const bool _state) {$/;"	f	namespace:__anon8
+set_type	event/event_getter.h	/^				void set_type(const _u16 _event_type) {$/;"	f	struct:event_getter::event_info
+sg	main.cpp	/^	surface_getter	sg;$/;"	m	namespace:__anon8	file:
+size	capture/fbinfo.h	/^	_u32 size;$/;"	m	struct:fbinfo
+size	common/fz_common.h	/^			const _u32 size() const {$/;"	f	class:fz::qlist
+slot	event/event_getter.h	/^				_u32 slot;$/;"	m	struct:event_getter::_event_id_map::_pair
+slot_count	event/event_getter.h	/^			int slot_count ;$/;"	m	struct:event_getter::_event_id_map
+snd_labels	event/getevent.h	/^static struct label snd_labels[] = {$/;"	v	typeref:struct:label
+sock	common/fz_tcp_server.h	/^		int sock;$/;"	m	class:tcp_server
+sockfds	common/fz_tcp_server.h	/^		fd_set sockfds;$/;"	m	class:tcp_server
+surface_getter	capture/surface_getter.h	/^		surface_getter() {$/;"	f	class:surface_getter
+surface_getter	capture/surface_getter.h	/^class surface_getter {$/;"	c
+sw_labels	event/getevent.h	/^static struct label sw_labels[] = {$/;"	v	typeref:struct:label
+syn_labels	event/getevent.h	/^static struct label syn_labels[] = {$/;"	v	typeref:struct:label
+tail	common/fz_common.h	/^					node* tail;$/;"	m	struct:fz::qlist::__anon4::__anon5
+tcp_server	common/fz_tcp_server.h	/^		tcp_server() $/;"	f	class:tcp_server
+tcp_server	common/fz_tcp_server.h	/^class tcp_server {$/;"	c
+timeout	common/fz_tcp_server.h	/^		struct timeval timeout;$/;"	m	class:tcp_server	typeref:struct:tcp_server::timeval
+ts	main.cpp	/^	tcp_server		ts;$/;"	m	namespace:__anon8	file:
+tv	common/fz_common.h	/^		timeval tv;$/;"	m	struct:fz::packet_header
+tv	event/event_getter.h	/^				struct timeval* tv;$/;"	m	struct:event_getter::event_info	typeref:struct:event_getter::event_info::timeval
+type	common/fz_common.h	/^			_u32 type;$/;"	m	union:fz::packet_header::__anon2
+ufds	event/event_getter.h	/^		struct pollfd *ufds;$/;"	m	class:event_getter	typeref:struct:event_getter::pollfd
+unlikely	common/fz_common.h	22;"	d
+unset_running_mode	main.cpp	/^	void unset_running_mode(const RUNNING_MODE _r) {$/;"	f	namespace:__anon8
+v	common/fz_common.h	/^				node* v[2];$/;"	m	union:fz::qlist::__anon4
+value	event/event_getter.h	/^				_u32 value;$/;"	m	struct:event_getter::_event_id_map::_pair
+value	event/event_getter.h	/^				_u32* value;$/;"	m	struct:event_getter::event_info
+value	event/getevent.h	/^    int value;$/;"	m	struct:label
+version	capture/fbinfo.h	/^	_u32 version;$/;"	m	struct:fbinfo
+wait_client	common/fz_tcp_server.h	/^		int wait_client() {$/;"	f	class:tcp_server
+width	capture/fbinfo.h	/^	_u32 width;$/;"	m	struct:fbinfo
+width	common/fz_common.h	/^				_u16 width;$/;"	m	struct:fz::packet_header::__anon2::__anon3
+~event_getter	event/event_getter.h	/^		~event_getter() {$/;"	f	class:event_getter
+~event_info	event/event_getter.h	/^				~event_info() {$/;"	f	struct:event_getter::event_info
+~event_player	event/event_player.h	/^		~event_player() {$/;"	f	class:event_player
+~qlist	common/fz_common.h	/^			~qlist(){$/;"	f	class:fz::qlist
+~surface_getter	capture/surface_getter.h	/^		~surface_getter() {$/;"	f	class:surface_getter
+~tcp_server	common/fz_tcp_server.h	/^		~tcp_server() {$/;"	f	class:tcp_server
