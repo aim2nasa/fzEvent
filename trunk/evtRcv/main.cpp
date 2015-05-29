@@ -29,8 +29,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	else
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
 
-	CEvtRcv er;
-	er._pStream = &client_stream;
+	CEvtRcv er(&client_stream);
 	er.activate();
 
 	//Do something
