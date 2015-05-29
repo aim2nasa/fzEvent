@@ -2,6 +2,9 @@
 #include "ace/Log_Msg.h" 
 #include "ace/OS.h"
 
+#define CONTROL_MESSAGE_EVENT_RECORD_START	(0x00020001)
+#define CONTROL_MESSAGE_EVENT_RECORD_STOP	(0x00020002)
+
 static char* SERVER_HOST = "127.0.0.1";
 static u_short SERVER_PORT = 19002;
 
@@ -25,6 +28,20 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
 
 	//Do something
+	while (1){
+		unsigned int cmdCode;
+		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_START;
+		ssize_t nSent = client_stream.send_n(&cmdCode, sizeof(unsigned int));
+		ACE_ASSERT(nSent == sizeof(unsigned int));
+
+		ACE_OS::sleep(5);
+
+		cmdCode = CONTROL_MESSAGE_EVENT_RECORD_STOP;
+		client_stream.send_n(&cmdCode, sizeof(unsigned int));
+		ACE_ASSERT(nSent == sizeof(unsigned int));
+
+		ACE_OS::sleep(1);
+	}
 
 	if (client_stream.close() == -1)
 		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "close"), -1);
