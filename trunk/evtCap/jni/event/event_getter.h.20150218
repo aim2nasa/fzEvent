@@ -1,0 +1,29 @@
+#ifndef ___EVENT_GETTER_H
+#define ___EVENT_GETTER_H
+
+#include "../common/fz_common.h"
+#include "../common/fz_trace.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <fcntl.h>
+
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/poll.h>
+#include <sys/inotify.h>
+
+#include <linux/input.h>
+
+FZ_BEGIN
+
+class event_getter {
+
+};
+
+FZ_END
+
+#endif /*___EVENT_GETTER_H*/
