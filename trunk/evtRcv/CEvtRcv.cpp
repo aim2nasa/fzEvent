@@ -98,6 +98,8 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 
 	ACE_TString evtType = recognize_event(st, tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
+
+	write(st);
 }
 
 int CEvtRcv::svc()
@@ -227,6 +229,10 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 	return ret;
 }
 
-void CEvtRcv::write()
+void CEvtRcv::write(const SYSTEMTIME& st)
 {
+	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
+	ACE_TCHAR filename[512];
+	ACE_OS::sprintf(filename, ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d.txt"),ACE_TEXT("SCP"),ACE_TEXT("DEVID"),
+		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 }
