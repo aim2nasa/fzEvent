@@ -13,37 +13,7 @@ CEvtRcv::~CEvtRcv()
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) CEvtRcv() Destructor\n")));
 }
 
-int CEvtRcv::svc()
-{
-	device_packet_header header;
-	char buf[BUFSIZ];
-	while (1){
-		header.clear();
-		ssize_t rcvSize = _pStream->recv_n(buf, sizeof(header) + sizeof(_u32));
-		if (rcvSize <= 0) {
-			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%P|%t) Connection closed while receiving header\n")));
-			return -1;
-		}
-		ACE_ASSERT(rcvSize == (sizeof(header) + sizeof(_u32)));
-		_u32 len = parseHeader(&header, buf);
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Header %dbytes received, Len=%dbytes\n"), rcvSize,len));
-
-		rcvSize = _pStream->recv_n(buf,len);
-		if (rcvSize <= 0) {
-			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%P|%t) Connection closed while receiving body\n")));
-			return -1;
-		}
-		ACE_ASSERT(rcvSize==len);
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Body %dbytes received\n"),rcvSize));
-
-		//convert unix timeval to SYSTEMTIME
-		SYSTEMTIME st;
-		unix_timeval_to_win32_systime(header.tv, &st);
-	}
-	return 0;
-}
-
-_u32 CEvtRcv::parseHeader(device_packet_header* _header,char* pBuffer)
+_u32 CEvtRcv::parseHeader(device_packet_header* _header, char* pBuffer)
 {
 	char* p = pBuffer;
 	ACE_OS::memcpy(&_header->tv, p, sizeof(_header->tv));
@@ -77,4 +47,34 @@ void CEvtRcv::unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st)
 
 		FileTimeToSystemTime(&ft, st);
 		st->wMilliseconds = (WORD)(in.tv_usec / 1000);
+}
+
+int CEvtRcv::svc()
+{
+	device_packet_header header;
+	char buf[BUFSIZ];
+	while (1){
+		header.clear();
+		ssize_t rcvSize = _pStream->recv_n(buf, sizeof(header) + sizeof(_u32));
+		if (rcvSize <= 0) {
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%P|%t) Connection closed while receiving header\n")));
+			return -1;
+		}
+		ACE_ASSERT(rcvSize == (sizeof(header) + sizeof(_u32)));
+		_u32 len = parseHeader(&header, buf);
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Header %dbytes received, Len=%dbytes\n"), rcvSize,len));
+
+		rcvSize = _pStream->recv_n(buf,len);
+		if (rcvSize <= 0) {
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%P|%t) Connection closed while receiving body\n")));
+			return -1;
+		}
+		ACE_ASSERT(rcvSize==len);
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Body %dbytes received\n"),rcvSize));
+
+		//convert unix timeval to SYSTEMTIME
+		SYSTEMTIME st;
+		unix_timeval_to_win32_systime(header.tv, &st);
+	}
+	return 0;
 }
