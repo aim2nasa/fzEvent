@@ -101,7 +101,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	ACE_TString evtType = recognize_event(st, tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
-	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false);
+	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
 }
 
 int CEvtRcv::svc()
@@ -231,7 +231,7 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 	return ret;
 }
 
-void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe)
+void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe, const device_packet_event& e)
 {
 	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
 	ACE_TCHAR filename[512];
@@ -260,6 +260,8 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 				ACE_OS::fprintf(write_fp, (write_buffer_format[0] + ACE_TEXT("TAP\n")).c_str());
 		}
 	}
+
+	ACE_OS::fprintf(write_fp, (write_buffer_format[1] + ACE_TEXT("%d\n")).c_str(), e.count);
 
 	ACE_OS::fclose(write_fp);
 }
