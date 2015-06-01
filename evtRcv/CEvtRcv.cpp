@@ -155,7 +155,7 @@ int CEvtRcv::svc()
 
 ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
 {
-	ACE_TString code_label, value_label, ret;
+	ACE_TString ret;
 
 	bool is_multitouch, is_swipe, is_key;
 	is_multitouch = is_swipe = is_key = false;
@@ -231,6 +231,16 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 	return ret;
 }
 
+ACE_TString CEvtRcv::get_label(const struct label *labels, int value)
+{
+	while (labels->name && value != labels->value)
+		labels++;
+	if (!labels->name)
+		return ACE_TEXT("");
+	else
+		return ACE_TEXT(labels->name);
+}
+
 void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe, const device_packet_event& e)
 {
 	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
@@ -278,6 +288,29 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 			ACE_OS::fprintf(write_fp, ACE_TEXT(", "), e.id[i]);
 	}
 	ACE_OS::fprintf(write_fp, L"\n");
+
+	ACE_TString code_label;
+	ACE_OS::fprintf(write_fp, write_buffer_format[4].c_str());
+	for (_u32 i = 0; i < e.count; ++i) { /* code */
+		if (e.code[i] == 0) {/* SYN_REPORT */
+			code_label = get_label(syn_labels, e.code[i]);
+		}
+		else {
+			switch (e.type)
+			{
+			case EV_ABS:
+				code_label = get_label(abs_labels, e.code[i]);
+				break;
+			case EV_KEY:
+				code_label = get_label(key_labels, e.code[i]);
+				break;
+			}
+		}
+		ACE_OS::fprintf(write_fp, ACE_TEXT("%s"), code_label.c_str());
+		if (i + 1 != e.count)
+			ACE_OS::fprintf(write_fp, ACE_TEXT(", "), e.id[i]);
+	}
+	ACE_OS::fprintf(write_fp, ACE_TEXT("\n"));
 
 	ACE_OS::fclose(write_fp);
 }
