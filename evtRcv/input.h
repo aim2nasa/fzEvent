@@ -954,7 +954,7 @@ Labeling phase
 */
 
 struct label {
-	const wchar_t *name;
+	const char *name;
 	int value;
 };
 
