@@ -1,6 +1,7 @@
 #include "CEvtRcv.h"
 #include "ace/SOCK_Stream.h"
 #include "device_packet_header.h"
+#include "device_packet_event.h"
 
 #define DEVM_DEVICE_PACKET_TYPE_MASK				(0x80008000) 
 #define DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE		(0x00000000)
@@ -29,6 +30,30 @@ _u32 CEvtRcv::parseHeader(device_packet_header* _header, char* pBuffer)
 
 	_u32 len = 0;
 	ACE_OS::memcpy(&len, p, sizeof(_u32));
+	return len;
+}
+
+_u32 CEvtRcv::parseEvtPacket(device_packet_event* _event, char* pBuffer)
+{
+	_u8* p = reinterpret_cast<_u8*>(pBuffer);
+	_u32 len = 0;
+	_event->type = *(_u16*)p; p += sizeof(_event->type); len += sizeof(_event->type);
+	_event->count = *(_u32*)p; p += sizeof(_event->count); len += sizeof(_event->count);
+	_event->dev_id = *(_u32*)p; p += sizeof(_event->dev_id); len += sizeof(_event->dev_id);
+
+	timeval _tv; _s32 _id; _u16 _code; _u32 _value;
+	for (_u32 i = 0; i < _event->count; ++i)
+	{
+		_tv = *(timeval*)p; p += sizeof(_tv); len += sizeof(_tv);
+		_id = *(_s32*)p; p += sizeof(_id); len += sizeof(_id);
+		_code = *(_u16*)p; p += sizeof(_code); len += sizeof(_code);
+		_value = *(_u32*)p; p += sizeof(_value); len += sizeof(_value);
+
+		_event->tv.push_back(_tv);
+		_event->id.push_back(_id);
+		_event->code.push_back(_code);
+		_event->value.push_back(_value);
+	}
 	return len;
 }
 

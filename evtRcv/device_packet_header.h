@@ -1,6 +1,8 @@
 #ifndef __DEVICE_PACKET_HEADER_H__
 #define __DEVICE_PACKET_HEADER_H__
 
+#include "typedef.h"
+
 struct device_packet_header {
 	timeval tv;
 	union {
