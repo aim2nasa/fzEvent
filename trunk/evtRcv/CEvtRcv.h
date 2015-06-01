@@ -1,6 +1,7 @@
 #ifndef __CEVTRCV_H__
 #define __CEVTRCV_H__
 
+#include "typedef.h"
 #include "ace/Task.h"
 
 class ACE_SOCK_Stream;
@@ -14,7 +15,7 @@ public:
 	~CEvtRcv();
 
 	virtual int svc(void);
-	void parseHeader(device_packet_header* _header, char* pBuffer);
+	_u32 parseHeader(device_packet_header* _header, char* pBuffer);
 
 private:
 	ACE_SOCK_Stream* _pStream;
