@@ -2,6 +2,7 @@
 #include "ace/SOCK_Stream.h"
 #include "device_packet_header.h"
 #include "device_packet_event.h"
+#include "input.h"
 
 #define DEVM_DEVICE_PACKET_TYPE_MASK				(0x80008000) 
 #define DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE		(0x00000000)
@@ -140,7 +141,12 @@ int CEvtRcv::svc()
 
 std::wstring CEvtRcv::get_label(const struct label *labels, int value)
 {
-	return std::wstring(L"");
+	while (labels->name && value != labels->value)
+		labels++;
+	if (!labels->name)
+		return std::wstring(L"");
+	else
+		return std::wstring(labels->name);
 }
 
 std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
