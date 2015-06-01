@@ -16,6 +16,7 @@ public:
 
 	virtual int svc(void);
 	_u32 parseHeader(device_packet_header* _header, char* pBuffer);
+	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
 
 private:
 	ACE_SOCK_Stream* _pStream;
