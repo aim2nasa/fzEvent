@@ -87,7 +87,8 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	_u32 lenGet = parseEvtPacket(&e, pBuffer);
 	ACE_ASSERT(lenGet == len);
 
-	recognize_event(st, tv, e);
+	std::wstring evtType = recognize_event(st, tv, e);
+	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"), evtType.c_str()));
 }
 
 int CEvtRcv::svc()
@@ -151,5 +152,80 @@ std::wstring CEvtRcv::get_label(const struct label *labels, int value)
 
 std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
 {
-	return std::wstring(L"");
+	std::wstring type_label, code_label, value_label, ret;
+	type_label = code_label = value_label = ret = L"";
+
+	bool is_multitouch, is_swipe, is_key;
+	is_multitouch = is_swipe = is_key = false;
+
+	type_label = get_label(ev_labels, e.type);
+	switch (e.type)
+	{
+	case EV_ABS: /* touch event */
+	{
+		{
+			_s32 prev = -1;
+			for (auto i = e.id.begin(); i != e.id.end(); ++i){
+				if (*i != -1 && prev != -1 && *i != prev) {
+					is_multitouch = true;
+				}
+				prev = *i;
+			}
+			if (is_multitouch){
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: MultiTouch\n")));
+				ret = L"MULTITOUCH";
+			}
+			else{
+				/* swipe는 velocity로 처리해야 하지만 현재는 우선 쉽게... */
+
+				int first_x = -1, first_y = -1;
+				int last_x = -1, last_y = -1;
+				int x = -1, y = -1;
+				for (_u32 i = 0; i < e.count; ++i) {
+					switch (e.code[i]) {
+					case ABS_MT_POSITION_X: x = e.value[i]; break;
+					case ABS_MT_POSITION_Y: y = e.value[i]; break;
+					}
+					if (first_x == -1)
+						first_x = x;
+					if (first_y == -1)
+						first_y = y;
+
+					last_x = x;
+					last_y = y;
+
+					/* 우선은 임시로 이렇게 처리하는 것임, 나중에 바꿔야 함. */
+					static const int velocity = 50;
+					if (abs(first_x - last_x) > velocity ||
+						abs(first_y - last_y) > velocity)
+						is_swipe = true;
+				}
+				if (is_swipe) {
+					ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: Swipe\n")));
+					ret = L"SWIPE";
+				}
+				else {
+					ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: Tap\n")));
+					ret = L"TAP";
+				}
+			}
+		}
+		break;
+	}
+	case EV_KEY: /* key는 하나의 이벤트만 들어옴 */
+	{
+		if (e.count != 1) {
+			/* 이 경우 문제 있는 것임 */
+			return L"";
+		}
+		is_key = true;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: GPIO Key\n")));
+		ret = L"KEY";
+		break;
+	}
+	default:
+		/* discard */
+		return L"";
+	}
+	return ret;
 }
