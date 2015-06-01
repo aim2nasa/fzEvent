@@ -235,4 +235,8 @@ void CEvtRcv::write(const SYSTEMTIME& st)
 	ACE_TCHAR filename[512];
 	ACE_OS::sprintf(filename, ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d.txt"),ACE_TEXT("SCP"),ACE_TEXT("DEVID"),
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
+
+	FILE* write_fp = ACE_OS::fopen(filename,ACE_TEXT("w"));
+
+	ACE_OS::fclose(write_fp);
 }
