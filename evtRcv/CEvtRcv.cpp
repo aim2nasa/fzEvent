@@ -101,7 +101,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	ACE_TString evtType = recognize_event(st, tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
-	write(st,tv);
+	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false);
 }
 
 int CEvtRcv::svc()
@@ -231,7 +231,7 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 	return ret;
 }
 
-void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv)
+void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe)
 {
 	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
 	ACE_TCHAR filename[512];
@@ -246,6 +246,20 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv)
 	/* start time */
 	/* header의 system time(timeval)으로 교체 */
 	ACE_OS::fprintf(write_fp, ACE_TEXT("time: %ld%03ld\n"),tv.tv_sec, tv.tv_usec / 1000);
+
+	if (is_key) {
+		ACE_OS::fprintf(write_fp, (write_buffer_format[0] + ACE_TEXT("KEY\n")).c_str());
+	}
+	else {
+		if (is_multitouch)
+			ACE_OS::fprintf(write_fp, (write_buffer_format[0] + ACE_TEXT("MULTITOUCH\n")).c_str());
+		else {
+			if (is_swipe)
+				ACE_OS::fprintf(write_fp, (write_buffer_format[0] + ACE_TEXT("SWIPE\n")).c_str());
+			else
+				ACE_OS::fprintf(write_fp, (write_buffer_format[0] + ACE_TEXT("TAP\n")).c_str());
+		}
+	}
 
 	ACE_OS::fclose(write_fp);
 }
