@@ -80,6 +80,13 @@ void CEvtRcv::unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st)
 		st->wMilliseconds = (WORD)(in.tv_usec / 1000);
 }
 
+void CEvtRcv::OnEventCapture(char* pBuffer,_u32 len)
+{
+	device_packet_event e;
+	_u32 lenGet = parseEvtPacket(&e, pBuffer);
+	ACE_ASSERT(lenGet == len);
+}
+
 int CEvtRcv::svc()
 {
 	device_packet_header header;
@@ -114,6 +121,7 @@ int CEvtRcv::svc()
 			break;
 		case DEVM_DEVICE_PACKET_TYPE_EVENT_CAPTURE:
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Event Capture\n")));
+			OnEventCapture(buf, len);
 			break;
 		case DEVM_DEVICE_PACKET_TYPE_CONTROL:
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Control\n")));
