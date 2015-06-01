@@ -239,6 +239,9 @@ void CEvtRcv::write(const SYSTEMTIME& st)
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 
 	FILE* write_fp = ACE_OS::fopen(filename,ACE_TEXT("w"));
+
+	/* sequence id */
 	ACE_OS::fprintf(write_fp, ACE_TEXT("seq: %d\n"),_sEventSequence++);
+
 	ACE_OS::fclose(write_fp);
 }
