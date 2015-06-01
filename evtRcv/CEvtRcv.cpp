@@ -311,6 +311,28 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 			ACE_OS::fprintf(write_fp, ACE_TEXT(", "), e.id[i]);
 	}
 	ACE_OS::fprintf(write_fp, ACE_TEXT("\n"));
+	
+	ACE_TString value_label;
+	ACE_OS::fprintf(write_fp, write_buffer_format[5].c_str());
+	for (_u32 i = 0; i < e.count; ++i) { /* value */
+		switch (e.type)
+		{
+		case EV_ABS:
+			value_label = ACE_TEXT("");
+			break;
+		case EV_KEY:
+			value_label = get_label(key_value_labels, e.value[i]);
+			break;
+		}
+		if (value_label == ACE_TEXT(""))
+			ACE_OS::fprintf(write_fp, ACE_TEXT("%d"), e.value[i]);
+		else
+			ACE_OS::fprintf(write_fp, ACE_TEXT("%s"), value_label.c_str());
+
+		if (i + 1 != e.count)
+			ACE_OS::fprintf(write_fp, ACE_TEXT(", "), e.id[i]);
+	}
+	ACE_OS::fprintf(write_fp, ACE_TEXT("\n"));
 
 	ACE_OS::fclose(write_fp);
 }
