@@ -22,6 +22,7 @@ public:
 	static void OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, const timeval& tv);
 	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
 	static ACE_TString recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e);
+	static void write();
 
 private:
 	ACE_SOCK_Stream* _pStream;
