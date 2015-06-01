@@ -4,6 +4,7 @@
 #include "ace/Task.h"
 
 class ACE_SOCK_Stream;
+struct device_packet_header;
 
 class CEvtRcv : public ACE_Task < ACE_MT_SYNCH >
 {
@@ -13,6 +14,7 @@ public:
 	~CEvtRcv();
 
 	virtual int svc(void);
+	void parseHeader(device_packet_header* _header, char* pBuffer);
 
 private:
 	ACE_SOCK_Stream* _pStream;
