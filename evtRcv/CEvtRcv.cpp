@@ -18,7 +18,7 @@ int CEvtRcv::svc()
 	while (1){
 		ssize_t rcvSize = _pStream->recv(buf, sizeof(buf));
 		if (rcvSize <= 0) {
-			ACE_DEBUG((LM_DEBUG,ACE_TEXT("(%P|%t) Connection closed\n")));
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%P|%t) Connection closed\n")));
 			return -1;
 		}
 
