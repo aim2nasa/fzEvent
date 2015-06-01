@@ -101,7 +101,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	ACE_TString evtType = recognize_event(st, tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
-	write(st);
+	write(st,tv);
 }
 
 int CEvtRcv::svc()
@@ -231,7 +231,7 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 	return ret;
 }
 
-void CEvtRcv::write(const SYSTEMTIME& st)
+void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv)
 {
 	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
 	ACE_TCHAR filename[512];
@@ -242,6 +242,10 @@ void CEvtRcv::write(const SYSTEMTIME& st)
 
 	/* sequence id */
 	ACE_OS::fprintf(write_fp, ACE_TEXT("seq: %d\n"),_sEventSequence++);
+
+	/* start time */
+	/* header의 system time(timeval)으로 교체 */
+	ACE_OS::fprintf(write_fp, ACE_TEXT("time: %ld%03ld\n"),tv.tv_sec, tv.tv_usec / 1000);
 
 	ACE_OS::fclose(write_fp);
 }
