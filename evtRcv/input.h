@@ -958,7 +958,7 @@ struct label {
 	int value;
 };
 
-#define LABEL(constant) { L ## #constant, constant }
+#define LABEL(constant) { #constant, constant }
 #define LABEL_END { 0, -1 }
 
 static struct label input_prop_labels[] = {
@@ -1673,9 +1673,9 @@ static struct label ff_labels[] = {
 };
 
 static struct label key_value_labels[] = {
-	{ L"UP", 0 },
-	{ L"DOWN", 1 },
-	{ L"REPEAT", 2 },
+	{ "UP", 0 },
+	{ "DOWN", 1 },
+	{ "REPEAT", 2 },
 	LABEL_END,
 };
 
