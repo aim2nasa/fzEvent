@@ -33,10 +33,20 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		ACE_DEBUG((LM_DEBUG, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
 
 	ACE_OS::sleep(2);
+
+	//연결이 제대로 되는지 검사 테스트
+	ACE_DEBUG((LM_INFO, "(%P|%t) Connection testing...\n"));
+	char inpBuff[128];
+	ACE_Time_Value timeout(1);
+	ssize_t result = client_stream.recv(inpBuff, sizeof(inpBuff),&timeout);
+	if (result == -1 && ACE_OS::last_error()==ETIME)
+		ACE_DEBUG((LM_INFO, "(%P|%t) Connection test ok\n"));	//연결이 정상적이고 타임아웃된 경우이므로 정상 연결
+	else
+		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "Connection test failed"), -1);	//정상연결이 되지 않은 경우는 모두 실패 처리
+
 	CEvtRcv er(&client_stream);
 	er.activate();
 
-	char inpBuff[128];
 	bool bRun = true;
 	while (bRun)
 	{
