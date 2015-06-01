@@ -16,10 +16,11 @@ public:
 	~CEvtRcv();
 
 	virtual int svc(void);
-	_u32 parseHeader(device_packet_header* _header, char* pBuffer);
-	_u32 parseEvtPacket(device_packet_event* _event,char* pBuffer);
+
+	static _u32 parseHeader(device_packet_header* _header, char* pBuffer);
+	static _u32 parseEvtPacket(device_packet_event* _event,char* pBuffer);
+	static void OnEventCapture(char* pBuffer,_u32 len);
 	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
-	void OnEventCapture(char* pBuffer,_u32 len);
 
 private:
 	ACE_SOCK_Stream* _pStream;
