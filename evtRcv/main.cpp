@@ -40,7 +40,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	bool bRun = true;
 	while (bRun)
 	{
-		ACE_DEBUG((LM_INFO, "* Event Record Start[r] Event Record Stop:[t] Terminate Server[x]\n"));
+		ACE_DEBUG((LM_INFO, "\n<-Menu: Event Record Start[r],Event Record Stop:[t],Terminate Server[x]->\n"));
 		std::cin >> inpBuff;
 		std::cout << "Choice:" << inpBuff << std::endl;
 
