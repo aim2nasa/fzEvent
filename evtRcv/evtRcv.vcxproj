@@ -93,6 +93,7 @@
     <ClInclude Include="CEvtRcv.h" />
     <ClInclude Include="device_packet_event.h" />
     <ClInclude Include="device_packet_header.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="typedef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
