@@ -91,6 +91,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEvtRcv.h" />
+    <ClInclude Include="device_packet_header.h" />
+    <ClInclude Include="typedef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

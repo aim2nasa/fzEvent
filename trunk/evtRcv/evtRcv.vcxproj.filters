@@ -26,5 +26,11 @@
     <ClInclude Include="CEvtRcv.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="device_packet_header.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="typedef.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
