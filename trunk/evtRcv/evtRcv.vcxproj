@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEvtRcv.h" />
+    <ClInclude Include="device_packet_event.h" />
     <ClInclude Include="device_packet_header.h" />
     <ClInclude Include="typedef.h" />
   </ItemGroup>

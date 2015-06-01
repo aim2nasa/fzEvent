@@ -6,6 +6,7 @@
 
 class ACE_SOCK_Stream;
 struct device_packet_header;
+struct device_packet_event;
 
 class CEvtRcv : public ACE_Task < ACE_MT_SYNCH >
 {
@@ -16,6 +17,7 @@ public:
 
 	virtual int svc(void);
 	_u32 parseHeader(device_packet_header* _header, char* pBuffer);
+	_u32 parseEvtPacket(device_packet_event* _event,char* pBuffer);
 	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
 
 private:
