@@ -140,25 +140,14 @@ int CEvtRcv::svc()
 	return 0;
 }
 
-std::wstring CEvtRcv::get_label(const struct label *labels, int value)
-{
-	while (labels->name && value != labels->value)
-		labels++;
-	if (!labels->name)
-		return std::wstring(L"");
-	else
-		return std::wstring(labels->name);
-}
-
 std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
 {
-	std::wstring type_label, code_label, value_label, ret;
-	type_label = code_label = value_label = ret = L"";
+	std::wstring code_label, value_label, ret;
+	code_label = value_label = ret = L"";
 
 	bool is_multitouch, is_swipe, is_key;
 	is_multitouch = is_swipe = is_key = false;
 
-	type_label = get_label(ev_labels, e.type);
 	switch (e.type)
 	{
 	case EV_ABS: /* touch event */
