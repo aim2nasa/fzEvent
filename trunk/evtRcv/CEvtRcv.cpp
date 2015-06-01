@@ -85,6 +85,8 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	device_packet_event e;
 	_u32 lenGet = parseEvtPacket(&e, pBuffer);
 	ACE_ASSERT(lenGet == len);
+
+	recognize_event(st, tv, e);
 }
 
 int CEvtRcv::svc()
@@ -134,4 +136,14 @@ int CEvtRcv::svc()
 		}
 	}
 	return 0;
+}
+
+std::wstring CEvtRcv::get_label(const struct label *labels, int value)
+{
+	return std::wstring(L"");
+}
+
+std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
+{
+	return std::wstring(L"");
 }
