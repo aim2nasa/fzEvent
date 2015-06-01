@@ -21,6 +21,8 @@ public:
 	static _u32 parseEvtPacket(device_packet_event* _event,char* pBuffer);
 	static void OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, const timeval& tv);
 	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
+	static std::wstring get_label(const struct label *labels, int value);
+	static std::wstring recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e);
 
 private:
 	ACE_SOCK_Stream* _pStream;
