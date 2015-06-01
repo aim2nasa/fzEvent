@@ -87,8 +87,8 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	_u32 lenGet = parseEvtPacket(&e, pBuffer);
 	ACE_ASSERT(lenGet == len);
 
-	std::wstring evtType = recognize_event(st, tv, e);
-	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"), evtType.c_str()));
+	ACE_TString evtType = recognize_event(st, tv, e);
+	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 }
 
 int CEvtRcv::svc()
@@ -140,10 +140,9 @@ int CEvtRcv::svc()
 	return 0;
 }
 
-std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
+ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
 {
-	std::wstring code_label, value_label, ret;
-	code_label = value_label = ret = L"";
+	ACE_TString code_label, value_label, ret;
 
 	bool is_multitouch, is_swipe, is_key;
 	is_multitouch = is_swipe = is_key = false;
@@ -162,7 +161,7 @@ std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, c
 			}
 			if (is_multitouch){
 				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: MultiTouch\n")));
-				ret = L"MULTITOUCH";
+				ret = ACE_TEXT("MULTITOUCH");
 			}
 			else{
 				/* swipe는 velocity로 처리해야 하지만 현재는 우선 쉽게... */
@@ -191,11 +190,11 @@ std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, c
 				}
 				if (is_swipe) {
 					ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: Swipe\n")));
-					ret = L"SWIPE";
+					ret = ACE_TEXT("SWIPE");
 				}
 				else {
 					ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: Tap\n")));
-					ret = L"TAP";
+					ret = ACE_TEXT("TAP");
 				}
 			}
 		}
@@ -205,16 +204,16 @@ std::wstring CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, c
 	{
 		if (e.count != 1) {
 			/* 이 경우 문제 있는 것임 */
-			return L"";
+			return ACE_TEXT("");
 		}
 		is_key = true;
 		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) EVENT: GPIO Key\n")));
-		ret = L"KEY";
+		ret = ACE_TEXT("KEY");
 		break;
 	}
 	default:
 		/* discard */
-		return L"";
+		return ACE_TEXT("");
 	}
 	return ret;
 }
