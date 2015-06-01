@@ -271,5 +271,13 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 	}
 	ACE_OS::fprintf(write_fp, ACE_TEXT("\n"));
 
+	ACE_OS::fprintf(write_fp, write_buffer_format[3].c_str());
+	for (_u32 i = 0; i < e.count; ++i) { /* id */
+		ACE_OS::fprintf(write_fp, ACE_TEXT("%d"), e.id[i]);
+		if (i + 1 != e.count)
+			ACE_OS::fprintf(write_fp, ACE_TEXT(", "), e.id[i]);
+	}
+	ACE_OS::fprintf(write_fp, L"\n");
+
 	ACE_OS::fclose(write_fp);
 }
