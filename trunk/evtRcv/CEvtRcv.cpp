@@ -2,6 +2,12 @@
 #include "ace/SOCK_Stream.h"
 #include "device_packet_header.h"
 
+#define DEVM_DEVICE_PACKET_TYPE_MASK				(0x80008000) 
+#define DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE		(0x00000000)
+#define DEVM_DEVICE_PACKET_TYPE_EVENT_CAPTURE		(0x80008000)
+#define DEVM_DEVICE_PACKET_TYPE_CONTROL				(0x00008000)
+#define DEVM_DEVICE_PACKET_TYPE_RESERVED1			(0x80000000)
+
 CEvtRcv::CEvtRcv(ACE_SOCK_Stream* p)
 	:_pStream(p)
 {
@@ -75,6 +81,24 @@ int CEvtRcv::svc()
 		//convert unix timeval to SYSTEMTIME
 		SYSTEMTIME st;
 		unix_timeval_to_win32_systime(header.tv, &st);
+
+		switch (header.type & DEVM_DEVICE_PACKET_TYPE_MASK)
+		{
+		case DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE:
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Screen Capture\n")));
+			break;
+		case DEVM_DEVICE_PACKET_TYPE_EVENT_CAPTURE:
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Event Capture\n")));
+			break;
+		case DEVM_DEVICE_PACKET_TYPE_CONTROL:
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Control\n")));
+			break;
+		case DEVM_DEVICE_PACKET_TYPE_RESERVED1:
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Reserved1\n")));
+			break;
+		default:
+			break;
+		}
 	}
 	return 0;
 }
