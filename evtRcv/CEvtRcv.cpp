@@ -19,6 +19,8 @@ static const ACE_TString write_buffer_format[] = {
 	ACE_TEXT("eventvaluebyid : "),		/* [5]n */
 };
 
+unsigned int CEvtRcv::_sEventSequence = 0;
+
 CEvtRcv::CEvtRcv(ACE_SOCK_Stream* p)
 	:_pStream(p)
 {
@@ -237,6 +239,6 @@ void CEvtRcv::write(const SYSTEMTIME& st)
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 
 	FILE* write_fp = ACE_OS::fopen(filename,ACE_TEXT("w"));
-
+	ACE_OS::fprintf(write_fp, ACE_TEXT("seq: %d\n"),_sEventSequence++);
 	ACE_OS::fclose(write_fp);
 }

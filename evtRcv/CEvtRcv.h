@@ -24,6 +24,7 @@ public:
 	static ACE_TString recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e);
 	static void write(const SYSTEMTIME& st);
 
+	static unsigned int _sEventSequence;
 private:
 	ACE_SOCK_Stream* _pStream;
 };

@@ -59,6 +59,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 		case 'r':
 			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_START) != sizeof(unsigned int))
 				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_START)"), -1);
+			CEvtRcv::_sEventSequence = 0;	//event sequence √ ±‚»≠
 			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
 			break;
 		case 't':
