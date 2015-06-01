@@ -10,6 +10,15 @@
 #define DEVM_DEVICE_PACKET_TYPE_CONTROL				(0x00008000)
 #define DEVM_DEVICE_PACKET_TYPE_RESERVED1			(0x80000000)
 
+static const ACE_TString write_buffer_format[] = {
+	ACE_TEXT("eventname : "),			/* [0]1 */
+	ACE_TEXT("eventcount : "),			/* [1]1 */
+	ACE_TEXT("eventtime : "),			/* [2]n */
+	ACE_TEXT("eventid : "),				/* [3]n */
+	ACE_TEXT("eventnamebyid : "),		/* [4]n */
+	ACE_TEXT("eventvaluebyid : "),		/* [5]n */
+};
+
 CEvtRcv::CEvtRcv(ACE_SOCK_Stream* p)
 	:_pStream(p)
 {
@@ -216,4 +225,8 @@ ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, co
 		return ACE_TEXT("");
 	}
 	return ret;
+}
+
+void CEvtRcv::write()
+{
 }
