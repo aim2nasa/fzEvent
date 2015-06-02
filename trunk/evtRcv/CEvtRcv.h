@@ -3,6 +3,7 @@
 
 #include "typedef.h"
 #include "ace/Task.h"
+#include <vector>
 
 class ACE_SOCK_Stream;
 struct device_packet_header;
@@ -26,6 +27,8 @@ public:
 	static ACE_TString get_label(const struct label *labels, int value);
 
 	static void makeEventFile();
+	static void writeEventFile(const _u32 count, const _s32 dev_id, const std::vector<timeval>& tv,
+		const _u16& type,const std::vector<_u16>& code, const std::vector<_u32>& value);
 	static void closeEventFile();
 
 	static unsigned int _sEventSequence;
