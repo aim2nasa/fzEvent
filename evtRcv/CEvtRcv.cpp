@@ -246,7 +246,7 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 {
 	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
 	ACE_TCHAR filename[512];
-	ACE_OS::sprintf(filename, ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d.txt"),ACE_TEXT("SCP"),ACE_TEXT("DEVID"),
+	ACE_OS::sprintf(filename, ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d.txt"),ACE_TEXT("SCP"),ACE_TEXT("_DEVID"),
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 
 	FILE* write_fp = ACE_OS::fopen(filename,ACE_TEXT("w"));
