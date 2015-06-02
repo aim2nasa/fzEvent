@@ -341,6 +341,11 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 
 void CEvtRcv::makeEventFile()
 {
+	if (!CEvtRcv::_sFpEvt) {
+		ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file is already opened\n")));
+		return;
+	}
+
 	/* GMT+0 time, windows system time base... */
 	SYSTEMTIME st;
 	GetSystemTime(&st);
@@ -355,6 +360,8 @@ void CEvtRcv::makeEventFile()
 void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vector<timeval>& tv,
 	const _u16& type, const std::vector<_u16>& code, const std::vector<_u32>& value)
 {
+	ACE_ASSERT(CEvtRcv::_sFpEvt != NULL);
+
 	size_t written = 0;
 	for (_u32 i = 0; i < count; ++i) {
 		written = ACE_OS::fwrite(&tv[i], 1, sizeof(tv[i]), _sFpEvt);
@@ -391,4 +398,5 @@ void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vec
 void CEvtRcv::closeEventFile()
 {
 	ACE_OS::fclose(_sFpEvt);
+	CEvtRcv::_sFpEvt = NULL;
 }
