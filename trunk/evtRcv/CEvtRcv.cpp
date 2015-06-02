@@ -397,6 +397,8 @@ void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vec
 
 void CEvtRcv::closeEventFile()
 {
+	ACE_ASSERT(CEvtRcv::_sFpEvt != NULL);
+
 	static const DWORD end_file1 = 0xffffffff;
 	static const DWORD end_file2 = 0x8fffffff;
 
