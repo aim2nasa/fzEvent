@@ -26,10 +26,8 @@ int CEvtPlayer::open_event_file(const char* filename)
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file open error\n")));
     }
 
-    read_event();
-
-    //while(read_event() != 0)
-    //    ;
+    while(read_event() != 0)
+        ;
 
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event file opened :%s\n"),filename));
     close_event_file();
