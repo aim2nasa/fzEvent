@@ -341,7 +341,7 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 
 void CEvtRcv::makeEventFile()
 {
-	if (!CEvtRcv::_sFpEvt) {
+	if (CEvtRcv::_sFpEvt) {
 		ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file is already opened\n")));
 		return;
 	}
