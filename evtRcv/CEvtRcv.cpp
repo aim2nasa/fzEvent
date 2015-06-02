@@ -397,6 +397,16 @@ void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vec
 
 void CEvtRcv::closeEventFile()
 {
+	static const DWORD end_file1 = 0xffffffff;
+	static const DWORD end_file2 = 0x8fffffff;
+
+	size_t written = 0;
+	written = ACE_OS::fwrite(&end_file1, 1, sizeof(end_file1), _sFpEvt);
+	ACE_ASSERT(written == sizeof(end_file1));
+
+	written = ACE_OS::fwrite(&end_file2, 1, sizeof(end_file2), _sFpEvt);
+	ACE_ASSERT(written == sizeof(end_file2));
+
 	ACE_OS::fclose(_sFpEvt);
 	CEvtRcv::_sFpEvt = NULL;
 }
