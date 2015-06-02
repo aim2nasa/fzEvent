@@ -103,6 +103,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
 	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
+	writeEventFile(e.count, e.dev_id, e.tv, e.type, e.code, e.value);
 }
 
 int CEvtRcv::svc()
@@ -349,6 +350,42 @@ void CEvtRcv::makeEventFile()
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 
 	_sFpEvt = ACE_OS::fopen(filename, ACE_TEXT("w"));
+}
+
+void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vector<timeval>& tv,
+	const _u16& type, const std::vector<_u16>& code, const std::vector<_u32>& value)
+{
+	size_t written = 0;
+	for (_u32 i = 0; i < count; ++i) {
+		written = ACE_OS::fwrite(&tv[i], 1, sizeof(tv[i]), _sFpEvt);
+		ACE_ASSERT(written == sizeof(tv[i]));
+
+		written = ACE_OS::fwrite(&dev_id, 1, sizeof(dev_id), _sFpEvt);
+		ACE_ASSERT(written == sizeof(dev_id));
+
+		if (code[i] == 0 && value[i] == 0) { /* SYN_REPORT */
+			static const _u16 syn_report_ = 0;
+			written = ACE_OS::fwrite(&syn_report_, 1, sizeof(syn_report_), _sFpEvt);
+			ACE_ASSERT(written == sizeof(syn_report_));
+		}
+		else {
+			written = ACE_OS::fwrite(&type, 1, sizeof(type), _sFpEvt);
+			ACE_ASSERT(written == sizeof(type));
+		}
+
+		written = ACE_OS::fwrite(&code[i], 1, sizeof(code[i]), _sFpEvt);
+		ACE_ASSERT(written == sizeof(code[i]));
+
+		written = ACE_OS::fwrite(&value[i], 1, sizeof(value[i]), _sFpEvt);
+		ACE_ASSERT(written == sizeof(value[i]));
+	}
+
+	static const _u32 tok_type = 0xffffffff;
+	written = ACE_OS::fwrite(&tok_type, 1, sizeof(tok_type), _sFpEvt);
+	ACE_ASSERT(written == sizeof(tok_type));
+
+	written = ACE_OS::fwrite(&tok_type, 1, sizeof(tok_type), _sFpEvt);
+	ACE_ASSERT(written == sizeof(tok_type));
 }
 
 void CEvtRcv::closeEventFile()
