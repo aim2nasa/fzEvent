@@ -20,6 +20,7 @@ static const ACE_TString write_buffer_format[] = {
 };
 
 unsigned int CEvtRcv::_sEventSequence = 0;
+FILE* CEvtRcv::_sFpEvt = NULL;
 
 CEvtRcv::CEvtRcv(ACE_SOCK_Stream* p)
 	:_pStream(p)
@@ -335,4 +336,22 @@ void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool i
 	ACE_OS::fprintf(write_fp, ACE_TEXT("\n"));
 
 	ACE_OS::fclose(write_fp);
+}
+
+void CEvtRcv::makeEventFile()
+{
+	/* GMT+0 time, windows system time base... */
+	SYSTEMTIME st;
+	GetSystemTime(&st);
+
+	ACE_TCHAR filename[512];
+	ACE_OS::sprintf(filename,ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d_RESULT.txt"),ACE_TEXT("PATH"),ACE_TEXT("_ID"),
+		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
+
+	_sFpEvt = ACE_OS::fopen(filename, ACE_TEXT("w"));
+}
+
+void CEvtRcv::closeEventFile()
+{
+	ACE_OS::fclose(_sFpEvt);
 }
