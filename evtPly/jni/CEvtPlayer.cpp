@@ -20,7 +20,7 @@ int CEvtPlayer::open_event_file(const char* filename)
 {
     ACE_TRACE(ACE_TEXT("open_event_file"));
 
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) open event file :%s\n"),filename));
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file :%s...\n"),filename));
     _fd = open(filename, O_RDWR);
     if(_fd < 0) {
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file open error\n")));
@@ -29,8 +29,8 @@ int CEvtPlayer::open_event_file(const char* filename)
     while(read_event() != 0)
         ;
 
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event file opened :%s\n"),filename));
     close_event_file();
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) open event file done, %s\n"),filename));
     return 0;
 }
 
@@ -52,10 +52,10 @@ int CEvtPlayer::read_event()
 	if(_tv.tv_sec == 0xffffffff) 
 	{	
 	    if(_tv.tv_usec == 0xffffffff) {
-	        printf("--- READ EVENT TOK DONE ---\n");
+                ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
 		break;
 	     }else if(_tv.tv_usec == 0x8fffffff){
-	        printf("--- READ TOK END ---\n");
+                ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
 	        return 0;
 	    }
 	}
@@ -96,7 +96,7 @@ int CEvtPlayer::read_event()
 
     if(e) {
         int elements = insert_event_list(id, count, e);
-        ACE_DEBUG((LM_DEBUG,ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),id,count,elements));
+        ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),id,count,elements));
     }
 
     return -1;
@@ -161,5 +161,6 @@ int CEvtPlayer::play_event(const int seq)
     write(event_fd, &report, sizeof(report));
 
     close(event_fd);
+    ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) play event(seq:%d)\n"),seq));
     return 0;
 }
