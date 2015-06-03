@@ -87,7 +87,7 @@ int CEvtPlayer::read_event(const char* filename)
     }
 
     ACE_OS::fclose(fp);
-    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) read_event(%s) done\n"),filename));
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) read event(%s) done\n"),filename));
     return get_count();
 }
 
