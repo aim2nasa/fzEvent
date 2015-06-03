@@ -74,9 +74,12 @@ int CEvtPlayer::read_event()
 	    struct input_event* new_e = 
 	        (struct input_event*)realloc(e, sizeof(struct input_event)*(count+1));
             e = new_e;
+            ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e!=0\n")));
 	}
-	else
+	else{
 	    e = (struct input_event*)malloc(sizeof(struct input_event));
+            ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e==0\n")));
+        }
 
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event make buffer\n")));
 	e[count].time = _tv;
