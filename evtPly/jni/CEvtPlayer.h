@@ -14,7 +14,6 @@ public:
     int play_event(const int seq);
 
 private:
-    int _fd; 
     FILE* _fp;
 };
 
