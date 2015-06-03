@@ -4,9 +4,9 @@
 #include <fcntl.h>
 #include <linux/input.h>
 #include "event_list.h"
+#include "ace/OS_NS_stdio.h"
 
 CEvtPlayer::CEvtPlayer()
-:_fp(NULL)
 {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) CEvtPlayer Constructor\n")));
 }
@@ -16,100 +16,81 @@ CEvtPlayer::~CEvtPlayer()
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) CEvtPlayer Destructor\n")));
 }
 
-int CEvtPlayer::open_event_file(const char* filename)
-{
-    ACE_TRACE(ACE_TEXT("open_event_file"));
-
-    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file :%s...\n"),filename));
-    _fp = ACE_OS::fopen(filename,ACE_TEXT("rb"));
-    if(_fp==0){
-        ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file open error\n")));
-    }
-
-    while(read_event() != 0)
-        ;
-
-    close_event_file();
-    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) open event file done, %s\n"),filename));
-    return 0;
-}
-
-int CEvtPlayer::read_event()
+int CEvtPlayer::read_event(const char* filename)
 {
     ACE_TRACE(ACE_TEXT("read_event"));
 
-    struct timeval _tv;
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file :%s...\n"),filename));
+    FILE* fp = ACE_OS::fopen(filename,ACE_TEXT("rb"));
+    if(fp==0)
+		ACE_ERROR_RETURN((LM_ERROR, "event file open error:%s\n",filename), -1);
 
-    int ret = 0;
-    int count = 0;
-    struct input_event* e = 0; 
-    _s32 id; _u16 type; _u16 code; _s32 value;
-    do {
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) read event file...\n")));
+	struct timeval tv;
+	size_t ret = 0;
+	int count = 0;
+	_s32 id=-1;
+	struct input_event* e = 0;
+	while (1)
+	{
+		if ((ret = ACE_OS::fread(&tv, 1, sizeof(tv), fp)) != sizeof(tv))
+			ACE_ERROR_RETURN((LM_ERROR, "timevalue read failure\n"), -1);
 
-		if((ret = ACE_OS::fread(&_tv,1,sizeof(_tv),_fp))!=sizeof(_tv)) break;
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) timevalue read\n")));
-
-		if(_tv.tv_sec == 0xffffffff) 
-		{	
-			if(_tv.tv_usec == 0xffffffff) {
-					ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
-			break;
-			 }else if(_tv.tv_usec == 0x8fffffff){
-					ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
-				return 0;
+		if (tv.tv_sec == 0xffffffff)
+		{
+			if (tv.tv_usec == 0xffffffff) {
+				ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
+				int elements = insert_event_list(id, count, e);
+				ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"), id, count, elements));
+				e = 0;
+				count = 0;
+                                id = -1;
+				continue;
+			}
+			else if (tv.tv_usec == 0x8fffffff){
+				ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
+				break;
 			}
 		}
 
-		if((ret = ACE_OS::fread(&id,1,sizeof(id),_fp))!=sizeof(id)) break;
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (id=%d) read\n"),id));
-		if((ret = ACE_OS::fread(&type,1,sizeof(type),_fp))!=sizeof(type)) break;
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (type=%d) read\n"),type));
-		if((ret = ACE_OS::fread(&code,1,sizeof(code),_fp))!=sizeof(code)) break;
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (code=%d) read\n"),code));
-		if((ret = ACE_OS::fread(&value,1,sizeof(value),_fp))!=sizeof(value)) break;
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (value=%d) read\n"),value));
+		if ((ret = ACE_OS::fread(&id, 1, sizeof(id), fp)) != sizeof(id))
+			ACE_ERROR_RETURN((LM_ERROR, "id read failure\n"), -1);
+		_u16 type;
+		if ((ret = ACE_OS::fread(&type, 1, sizeof(type), fp)) != sizeof(type))
+			ACE_ERROR_RETURN((LM_ERROR, "type read failure\n"), -1);
+		_u16 code;
+		if ((ret = ACE_OS::fread(&code, 1, sizeof(code), fp)) != sizeof(code))
+			ACE_ERROR_RETURN((LM_ERROR, "code read failure\n"), -1);
+		_s32 value;
+		if ((ret = ACE_OS::fread(&value, 1, sizeof(value), fp)) != sizeof(value))
+			ACE_ERROR_RETURN((LM_ERROR, "value read failure\n"), -1);
 
-		if(e) {
-			struct input_event* new_e = 
-				(struct input_event*)realloc(e, sizeof(struct input_event)*(count+1));
+		if (e) {
+			struct input_event* new_e =
+				(struct input_event*)realloc(e, sizeof(struct input_event)*(count + 1));
 			e = new_e;
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e!=0\n")));
-		}else{
+		}
+		else{
 			e = (struct input_event*)malloc(sizeof(struct input_event));
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e==0\n")));
 		}
 
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event make buffer\n")));
-		e[count].time = _tv;
-		if(code == 0 && value == 0) {
- 			e[count].type = 0; /* SYN_REPORT */
-		}else{
-   			e[count].type = type;
+		e[count].time = tv;
+		if (code == 0 && value == 0) {
+			e[count].type = 0; /* SYN_REPORT */
+		}
+		else{
+			e[count].type = type;
 		}
 		e[count].code = code;
 		e[count].value = value;
 
 		count++;
+	}
 
-    } while(1);
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Read Event Count = %d\n"),count));
-
-    if(e) {
-        int elements = insert_event_list(id, count, e);
-        ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),id,count,elements));
-    }
-    return -1;
-}
-
-int CEvtPlayer::close_event_file()
-{ 
-    ACE_TRACE(ACE_TEXT("close_event_file"));
-
-    if(_fp) {
-        ACE_OS::fclose(_fp);
-	_fp = NULL;
-    }
+	ACE_OS::fclose(fp);
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) read_event(%s) done\n"),filename));
+    return get_count();
 }
 
 int CEvtPlayer::play_event(const int seq)
