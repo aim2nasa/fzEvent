@@ -47,60 +47,58 @@ int CEvtPlayer::read_event()
     do {
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) read event file...\n")));
 
-	if((ret = ACE_OS::fread(&_tv,1,sizeof(_tv),_fp))!=sizeof(_tv)) break;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) timevalue read\n")));
-	if(_tv.tv_sec == 0xffffffff) 
-	{	
-	    if(_tv.tv_usec == 0xffffffff) {
-                ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
-		break;
-	     }else if(_tv.tv_usec == 0x8fffffff){
-                ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
-	        return 0;
-	    }
-	}
+		if((ret = ACE_OS::fread(&_tv,1,sizeof(_tv),_fp))!=sizeof(_tv)) break;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) timevalue read\n")));
 
-	if((ret = ACE_OS::fread(&id,1,sizeof(id),_fp))!=sizeof(id)) break;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (id=%d) read\n"),id));
-	if((ret = ACE_OS::fread(&type,1,sizeof(type),_fp))!=sizeof(type)) break;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (type=%d) read\n"),type));
-	if((ret = ACE_OS::fread(&code,1,sizeof(code),_fp))!=sizeof(code)) break;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (code=%d) read\n"),code));
-	if((ret = ACE_OS::fread(&value,1,sizeof(value),_fp))!=sizeof(value)) break;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (value=%d) read\n"),value));
+		if(_tv.tv_sec == 0xffffffff) 
+		{	
+			if(_tv.tv_usec == 0xffffffff) {
+					ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
+			break;
+			 }else if(_tv.tv_usec == 0x8fffffff){
+					ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
+				return 0;
+			}
+		}
 
-	if(e) {
-	    struct input_event* new_e = 
-	        (struct input_event*)realloc(e, sizeof(struct input_event)*(count+1));
-            e = new_e;
-            ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e!=0\n")));
-	}
-	else{
-	    e = (struct input_event*)malloc(sizeof(struct input_event));
-            ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e==0\n")));
-        }
+		if((ret = ACE_OS::fread(&id,1,sizeof(id),_fp))!=sizeof(id)) break;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (id=%d) read\n"),id));
+		if((ret = ACE_OS::fread(&type,1,sizeof(type),_fp))!=sizeof(type)) break;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (type=%d) read\n"),type));
+		if((ret = ACE_OS::fread(&code,1,sizeof(code),_fp))!=sizeof(code)) break;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (code=%d) read\n"),code));
+		if((ret = ACE_OS::fread(&value,1,sizeof(value),_fp))!=sizeof(value)) break;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (value=%d) read\n"),value));
 
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event make buffer\n")));
-	e[count].time = _tv;
-	if(code == 0 && value == 0) {
- 	    e[count].type = 0; /* SYN_REPORT */
-	}else{
-   	    e[count].type = type;
-	}
-	e[count].code = code;
-	e[count].value = value;
+		if(e) {
+			struct input_event* new_e = 
+				(struct input_event*)realloc(e, sizeof(struct input_event)*(count+1));
+			e = new_e;
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e!=0\n")));
+		}else{
+			e = (struct input_event*)malloc(sizeof(struct input_event));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) e==0\n")));
+		}
 
-	count++;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) event make buffer\n")));
+		e[count].time = _tv;
+		if(code == 0 && value == 0) {
+ 			e[count].type = 0; /* SYN_REPORT */
+		}else{
+   			e[count].type = type;
+		}
+		e[count].code = code;
+		e[count].value = value;
+
+		count++;
 
     } while(1);
-
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Read Event Count = %d\n"),count));
 
     if(e) {
         int elements = insert_event_list(id, count, e);
         ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),id,count,elements));
     }
-
     return -1;
 }
 
@@ -139,25 +137,23 @@ int CEvtPlayer::play_event(const int seq)
     prev_time.tv_sec = -1; prev_time.tv_usec = -1;
     for(int i = 0 ; i < p->event_count ; ++i)
     {
-        if(prev_time.tv_usec != -1) {
-	    struct timeval diff_time ;
-	    timersub(&p->e[i].time, &prev_time, &diff_time);
-	    if(diff_time.tv_sec > 0 || diff_time.tv_usec > 100)
-		select(0,0,0,0,&diff_time);
-	}
+		if(prev_time.tv_usec != -1) {
+			struct timeval diff_time ;
+			timersub(&p->e[i].time, &prev_time, &diff_time);
+			if(diff_time.tv_sec > 0 || diff_time.tv_usec > 100) select(0,0,0,0,&diff_time);
+		}
 
-	struct input_event evt;
-	evt.time = p->e[i].time;
-	evt.type = p->e[i].type;
-	evt.code = p->e[i].code;
-	evt.value = p->e[i].value;
-        written = ACE_OS::fwrite(&evt,1,sizeof(evt),fpw);
-        ACE_ASSERT(written==sizeof(evt));
-        ACE_OS::fflush(fpw);
+		struct input_event evt;
+		evt.time = p->e[i].time;
+		evt.type = p->e[i].type;
+		evt.code = p->e[i].code;
+		evt.value = p->e[i].value;
+		written = ACE_OS::fwrite(&evt,1,sizeof(evt),fpw);
+		ACE_ASSERT(written==sizeof(evt));
+		ACE_OS::fflush(fpw);
 
-	prev_time = p->e[i].time;
-        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Play Event: %x %x %x\n"),
-            p->e[i].type,p->e[i].code,p->e[i].value));
+		prev_time = p->e[i].time;
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Play Event: %x %x %x\n"),p->e[i].type,p->e[i].code,p->e[i].value));
     }
 
     struct input_event report;
