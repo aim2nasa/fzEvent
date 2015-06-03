@@ -23,7 +23,18 @@ int insert_event_list(int _id, int _event_count, struct input_event* _e)
         }
         t->next = p;
     }
-    return 0;
+    return get_count();
+}
+
+int get_count()
+{
+    int count = 0;
+    struct event_list* p = event_list::head;
+    while(p) {
+	p = p->next;
+        count++;
+    }
+    return count;
 }
 
 event_list* get_event_data(int _seq)
