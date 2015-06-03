@@ -7,7 +7,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     ACE_TRACE(ACE_TEXT("main"));
 
-    ACE_LOG_MSG->priority_mask( LM_INFO|LM_ERROR|LM_DEBUG, ACE_Log_Msg::PROCESS);
+    ACE_LOG_MSG->priority_mask( LM_INFO|LM_ERROR, ACE_Log_Msg::PROCESS);
 
     if(argc<2)
         ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("usage:ep <event file>\n")), -1);
