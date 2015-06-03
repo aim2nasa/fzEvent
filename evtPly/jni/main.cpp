@@ -13,7 +13,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("usage:ep <event file>\n")), -1);
 
     CEvtPlayer ep;
-    ep.open_event_file(argv[1]); 
+    ep.read_event(argv[1]); 
     ep.play_event(0);
     ACE_OS::sleep(3);
     ep.play_event(1);
