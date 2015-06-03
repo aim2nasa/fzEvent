@@ -128,12 +128,13 @@ int CEvtPlayer::play_event(const int seq)
     char file_buffer[512];
     sprintf(file_buffer, "/dev/input/event%d", p->id);
 
-    int event_fd = open(file_buffer, O_WRONLY | O_NDELAY);
-    if(event_fd < 0) {
+    FILE* fpw = ACE_OS::fopen(file_buffer,ACE_TEXT("w"));
+    if(fpw==NULL){
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file ope failure :%s\n"),file_buffer));
         return -1;
     }
 
+    size_t written=0;
     struct timeval prev_time ;
     prev_time.tv_sec = -1; prev_time.tv_usec = -1;
     for(int i = 0 ; i < p->event_count ; ++i)
@@ -150,7 +151,8 @@ int CEvtPlayer::play_event(const int seq)
 	evt.type = p->e[i].type;
 	evt.code = p->e[i].code;
 	evt.value = p->e[i].value;
-	write(event_fd, &evt, sizeof(evt));
+        written = ACE_OS::fwrite(&evt,1,sizeof(evt),fpw);
+        ACE_ASSERT(written==sizeof(evt));
 
 	prev_time = p->e[i].time;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Play Event: %x %x %x\n"),
@@ -160,9 +162,10 @@ int CEvtPlayer::play_event(const int seq)
     struct input_event report;
     memset(&report, 0, sizeof(report));
     report.time = prev_time;
-    write(event_fd, &report, sizeof(report));
+    written = ACE_OS::fwrite(&report,1,sizeof(report),fpw);
+    ACE_ASSERT(written==sizeof(report));
 
-    close(event_fd);
+    ACE_OS::fclose(fpw);
     ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) play event(seq:%d)\n"),seq));
     return 0;
 }
