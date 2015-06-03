@@ -94,8 +94,10 @@ int CEvtPlayer::read_event()
 
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Read Event Count = %d\n"),count));
 
-    if(e)
+    if(e) {
+        ACE_DEBUG((LM_DEBUG,ACE_TEXT("(%P|%t) inserting event, id(%d) count(%d)\n"),id,count));
         insert_event_list(id, count, e);
+    }
 
     return -1;
 }
