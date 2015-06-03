@@ -6,7 +6,7 @@
 #include "event_list.h"
 
 CEvtPlayer::CEvtPlayer()
-:_fd(0)
+:_fp(NULL)
 {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) CEvtPlayer Constructor\n")));
 }
@@ -21,8 +21,8 @@ int CEvtPlayer::open_event_file(const char* filename)
     ACE_TRACE(ACE_TEXT("open_event_file"));
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file :%s...\n"),filename));
-    _fd = open(filename, O_RDWR);
-    if(_fd < 0) {
+    _fp = ACE_OS::fopen(filename,ACE_TEXT("rb"));
+    if(_fp==0){
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file open error\n")));
     }
 
@@ -47,7 +47,7 @@ int CEvtPlayer::read_event()
     do {
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) read event file...\n")));
 
-	if(ret = read(_fd, &_tv, sizeof(_tv)) < 0) break;
+	if((ret = ACE_OS::fread(&_tv,1,sizeof(_tv),_fp))!=sizeof(_tv)) break;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) timevalue read\n")));
 	if(_tv.tv_sec == 0xffffffff) 
 	{	
@@ -60,14 +60,13 @@ int CEvtPlayer::read_event()
 	    }
 	}
 
-	if(ret = read(_fd, &id, sizeof(id)) < 0) break;
+	if((ret = ACE_OS::fread(&id,1,sizeof(id),_fp))!=sizeof(id)) break;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (id=%d) read\n"),id));
-		
-	if (ret = read(_fd, &type, sizeof(type)) < 0) break;
+	if((ret = ACE_OS::fread(&type,1,sizeof(type),_fp))!=sizeof(type)) break;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (type=%d) read\n"),type));
-	if (ret = read(_fd, &code, sizeof(code)) < 0) break;
+	if((ret = ACE_OS::fread(&code,1,sizeof(code),_fp))!=sizeof(code)) break;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (code=%d) read\n"),code));
-	if (ret = read(_fd, &value, sizeof(value)) < 0) break;
+	if((ret = ACE_OS::fread(&value,1,sizeof(value),_fp))!=sizeof(value)) break;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) (value=%d) read\n"),value));
 
 	if(e) {
@@ -109,9 +108,9 @@ int CEvtPlayer::close_event_file()
 { 
     ACE_TRACE(ACE_TEXT("close_event_file"));
 
-    if(_fd) {
-        close(_fd);
-	_fd = 0;
+    if(_fp) {
+        ACE_OS::fclose(_fp);
+	_fp = NULL;
     }
 }
 
