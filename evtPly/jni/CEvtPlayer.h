@@ -1,6 +1,8 @@
 #ifndef __CEVTPLAYER_H__
 #define __CEVTPLAYER_H__
 
+#include "ace/OS_NS_stdio.h"
+
 class CEvtPlayer{
 public:
     CEvtPlayer();
@@ -13,6 +15,7 @@ public:
 
 private:
     int _fd; 
+    FILE* _fp;
 };
 
 #endif
