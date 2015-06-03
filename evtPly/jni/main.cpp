@@ -29,6 +29,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_OS::sleep(3);
     ep.play_event(6);
 
-    ACE_DEBUG((LM_INFO,"(%P:%t) event player end\n"));
+    ACE_DEBUG((LM_INFO,"(%P|%t) event player end\n"));
     return 0;
 }
