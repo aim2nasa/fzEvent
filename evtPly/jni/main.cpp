@@ -16,6 +16,15 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ep.play_event(1);
     ACE_OS::sleep(3);
     ep.play_event(2);
+    ACE_OS::sleep(3);
+    ep.play_event(3);
+    ACE_OS::sleep(3);
+    ep.play_event(4);
+
+    ACE_OS::sleep(3);
+    ep.play_event(5);
+    ACE_OS::sleep(3);
+    ep.play_event(6);
 
     ACE_DEBUG((LM_DEBUG,"(%P:%t) event player end\n"));
     return 0;
