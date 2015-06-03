@@ -153,6 +153,7 @@ int CEvtPlayer::play_event(const int seq)
 	evt.value = p->e[i].value;
         written = ACE_OS::fwrite(&evt,1,sizeof(evt),fpw);
         ACE_ASSERT(written==sizeof(evt));
+        ACE_OS::fflush(fpw);
 
 	prev_time = p->e[i].time;
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Play Event: %x %x %x\n"),
@@ -164,6 +165,7 @@ int CEvtPlayer::play_event(const int seq)
     report.time = prev_time;
     written = ACE_OS::fwrite(&report,1,sizeof(report),fpw);
     ACE_ASSERT(written==sizeof(report));
+    ACE_OS::fflush(fpw);
 
     ACE_OS::fclose(fpw);
     ACE_DEBUG((LM_INFO,ACE_TEXT("(%P|%t) play event(seq:%d)\n"),seq));
