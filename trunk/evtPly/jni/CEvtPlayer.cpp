@@ -20,7 +20,7 @@ int CEvtPlayer::read_event(const char* filename)
 {
     ACE_TRACE(ACE_TEXT("read_event"));
 
-    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file :%s...\n"),filename));
+    ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) openning event file (%s)\n"),filename));
     FILE* fp = ACE_OS::fopen(filename,ACE_TEXT("rb"));
     if(fp==0)
 	ACE_ERROR_RETURN((LM_ERROR, "event file open error:%s\n",filename), -1);
