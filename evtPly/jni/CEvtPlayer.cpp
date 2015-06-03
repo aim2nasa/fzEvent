@@ -38,7 +38,7 @@ int CEvtPlayer::read_event(const char* filename)
 	if (tv.tv_sec == 0xffffffff)
 	{
 	    if (tv.tv_usec == 0xffffffff) {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ EVENT TOK DONE ---\n")));
+		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) an event identified\n")));
 		int elements = insert_event_list(id, count, e);
 		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),
 				id, count, elements));
@@ -47,7 +47,7 @@ int CEvtPlayer::read_event(const char* filename)
                 id = -1;
 		continue;
 	    }else if (tv.tv_usec == 0x8fffffff){
-		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) --- READ TOK END ---\n")));
+		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) end of events reached\n")));
 		break;
 	    }
         }
