@@ -99,7 +99,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	_u32 lenGet = parseEvtPacket(&e, pBuffer);
 	ACE_ASSERT(lenGet == len);
 
-	ACE_TString evtType = recognize_event(st, tv, e);
+	ACE_TString evtType = recognize_event(tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
 	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
@@ -155,7 +155,7 @@ int CEvtRcv::svc()
 	return 0;
 }
 
-ACE_TString CEvtRcv::recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e)
+ACE_TString CEvtRcv::recognize_event(const timeval& tv, const device_packet_event& e)
 {
 	ACE_TString ret;
 
