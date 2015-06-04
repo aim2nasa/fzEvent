@@ -22,7 +22,7 @@ public:
 	static _u32 parseEvtPacket(device_packet_event* _event,char* pBuffer);
 	static void OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, const timeval& tv);
 	static void unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st);
-	static ACE_TString recognize_event(const SYSTEMTIME& st, const timeval& tv, const device_packet_event& e);
+	static ACE_TString recognize_event(const timeval& tv, const device_packet_event& e);
 	static void write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe, const device_packet_event& e);
 	static ACE_TString get_label(const struct label *labels, int value);
 
