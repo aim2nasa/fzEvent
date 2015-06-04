@@ -354,7 +354,7 @@ void CEvtRcv::makeEventFile()
 	ACE_OS::sprintf(filename,ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d_RESULT.txt"),ACE_TEXT("PATH"),ACE_TEXT("_ID"),
 		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
 
-	_sFpEvt = ACE_OS::fopen(filename, ACE_TEXT("w"));
+	_sFpEvt = ACE_OS::fopen(filename, ACE_TEXT("wb"));
 }
 
 void CEvtRcv::writeEventFile(const _u32 count, const _s32 dev_id, const std::vector<timeval>& tv,
