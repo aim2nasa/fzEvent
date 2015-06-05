@@ -3,6 +3,7 @@
 #include "device_packet_header.h"
 #include "device_packet_event.h"
 #include "input.h"
+#include "ace/Date_Time.h"
 
 #define DEVM_DEVICE_PACKET_TYPE_MASK				(0x80008000) 
 #define DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE		(0x00000000)
@@ -346,13 +347,13 @@ void CEvtRcv::makeEventFile()
 		return;
 	}
 
-	/* GMT+0 time, windows system time base... */
-	SYSTEMTIME st;
-	GetSystemTime(&st);
+	ACE_Time_Value now(ACE_OS::gettimeofday());
+	ACE_Date_Time dt;
+	dt.update(now);
 
 	ACE_TCHAR filename[512];
 	ACE_OS::sprintf(filename,ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d_RESULT.txt"),ACE_TEXT("PATH"),ACE_TEXT("_ID"),
-		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
+		dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), dt.second(), dt.microsec());
 
 	_sFpEvt = ACE_OS::fopen(filename, ACE_TEXT("wb"));
 }
