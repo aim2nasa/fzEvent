@@ -78,7 +78,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const timeval& tv)
 	ACE_ASSERT(lenGet == len);
 
 	ACE_TString evtType = recognize_event(tv, e);
-	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
 	write(tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
 	writeEventFile(e.count, e.dev_id, e.tv, e.type, e.code, e.value);
