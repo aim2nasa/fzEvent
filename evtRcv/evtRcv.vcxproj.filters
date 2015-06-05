@@ -15,27 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="jni\CEvtRcv.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CEvtRcv.cpp">
+    <ClCompile Include="jni\main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CEvtRcv.h">
+    <ClInclude Include="jni\device_packet_header.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="device_packet_header.h">
+    <ClInclude Include="jni\input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="typedef.h">
+    <ClInclude Include="jni\typedef.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="device_packet_event.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
+    <ClInclude Include="jni\device_packet_event.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

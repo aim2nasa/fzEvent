@@ -91,15 +91,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CEvtRcv.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="jni\CEvtRcv.cpp" />
+    <ClCompile Include="jni\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CEvtRcv.h" />
-    <ClInclude Include="device_packet_event.h" />
-    <ClInclude Include="device_packet_header.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="typedef.h" />
+    <ClInclude Include="jni\device_packet_event.h" />
+    <ClInclude Include="jni\device_packet_header.h" />
+    <ClInclude Include="jni\input.h" />
+    <ClInclude Include="jni\typedef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
