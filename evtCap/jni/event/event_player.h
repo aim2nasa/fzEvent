@@ -156,7 +156,6 @@ class event_player {
 				//write(event_fd, &p->e[i].type, sizeof(p->e[i].type));
 				//write(event_fd, &p->e[i].code, sizeof(p->e[i].code));
 				//write(event_fd, &p->e[i].value, sizeof(p->e[i].value));
-				flush(event_fd);
 
 				prev_time = p->e[i].time;
 				fz::TRACE(FZ_LOG_INFO, "Play Event: %x %x %x\n", 
@@ -171,7 +170,6 @@ class event_player {
 			//write(event_fd, &_zero_16, sizeof(_zero_16));
 			//write(event_fd, &_zero_16, sizeof(_zero_16));
 			//write(event_fd, &_zero_32, sizeof(_zero_32));
-			flush(event_fd);
 
 			close(event_fd);
 
