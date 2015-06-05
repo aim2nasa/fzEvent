@@ -38,7 +38,7 @@ int CEvtPlayer::read_event(const char* filename)
 	if (tv.tv_sec == 0xffffffff)
 	{
 	    if (tv.tv_usec == 0xffffffff) {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) an event identified\n")));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) an event identified\n")));
 		int elements = insert_event_list(id, count, e);
 		ACE_DEBUG((LM_INFO, ACE_TEXT("(%P|%t) insert event(id:%d,count:%d),event list=%d\n"),
 				id, count, elements));
