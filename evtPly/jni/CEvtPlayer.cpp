@@ -105,7 +105,7 @@ int CEvtPlayer::play_event(const int seq)
     char file_buffer[512];
     sprintf(file_buffer, "/dev/input/event%d", p->id);
 
-    FILE* fpw = ACE_OS::fopen(file_buffer,ACE_TEXT("w"));
+    FILE* fpw = ACE_OS::fopen(file_buffer,ACE_TEXT("wb"));
     if(fpw==NULL){
         ACE_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) event file ope failure :%s\n"),file_buffer));
         return -1;
