@@ -94,7 +94,7 @@ void CEvtRcv::unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st)
 		st->wMilliseconds = (WORD)(in.tv_usec / 1000);
 }
 
-void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, const timeval& tv)
+void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const timeval& tv)
 {
 	device_packet_event e;
 	_u32 lenGet = parseEvtPacket(&e, pBuffer);
@@ -130,10 +130,6 @@ int CEvtRcv::svc()
 		ACE_ASSERT(rcvSize==len);
 		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Body %dbytes received\n"),rcvSize));
 
-		//convert unix timeval to SYSTEMTIME
-		SYSTEMTIME st;
-		unix_timeval_to_win32_systime(header.tv, &st);
-
 		switch (header.type & DEVM_DEVICE_PACKET_TYPE_MASK)
 		{
 		case DEVM_DEVICE_PACKET_TYPE_SCREEN_CAPTURE:
@@ -141,7 +137,7 @@ int CEvtRcv::svc()
 			break;
 		case DEVM_DEVICE_PACKET_TYPE_EVENT_CAPTURE:
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Event Capture\n")));
-			OnEventCapture(buf, len,st,header.tv);
+			OnEventCapture(buf, len,header.tv);
 			break;
 		case DEVM_DEVICE_PACKET_TYPE_CONTROL:
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Control\n")));
