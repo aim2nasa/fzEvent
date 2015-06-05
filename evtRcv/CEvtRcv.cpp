@@ -371,8 +371,8 @@ void CEvtRcv::closeEventFile()
 {
 	ACE_ASSERT(CEvtRcv::_sFpEvt != NULL);
 
-	static const DWORD end_file1 = 0xffffffff;
-	static const DWORD end_file2 = 0x8fffffff;
+	static const unsigned long end_file1 = 0xffffffff;
+	static const unsigned long end_file2 = 0x8fffffff;
 
 	size_t written = 0;
 	written = ACE_OS::fwrite(&end_file1, 1, sizeof(end_file1), _sFpEvt);
