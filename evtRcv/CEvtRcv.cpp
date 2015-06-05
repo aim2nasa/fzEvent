@@ -103,7 +103,7 @@ void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const SYSTEMTIME& st, cons
 	ACE_TString evtType = recognize_event(tv, e);
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %s event\n"),evtType.c_str()));
 
-	write(st, tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
+	write(tv, evtType == ACE_TEXT("KEY") ? true : false, evtType == ACE_TEXT("MULTITOUCH") ? true : false, evtType == ACE_TEXT("SWIPE") ? true : false, e);
 	writeEventFile(e.count, e.dev_id, e.tv, e.type, e.code, e.value);
 }
 
@@ -244,12 +244,13 @@ ACE_TString CEvtRcv::get_label(const struct label *labels, int value)
 		return ACE_TEXT(labels->name);
 }
 
-void CEvtRcv::write(const SYSTEMTIME& st, const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe, const device_packet_event& e)
+void CEvtRcv::write(const timeval& tv, bool is_key, bool is_multitouch, bool is_swipe, const device_packet_event& e)
 {
-	/* [path]\\[dev_name]_[YYYYMMDD_HHMMSSsss].txt */
+	ACE_Time_Value atv(tv);
+	ACE_Date_Time dt(atv);
 	ACE_TCHAR filename[512];
 	ACE_OS::sprintf(filename, ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d.txt"),ACE_TEXT("SCP"),ACE_TEXT("_DEVID"),
-		st.wYear, st.wMonth, st.wDay,st.wHour, st.wMinute, st.wSecond,st.wMilliseconds);
+		dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), dt.second(), dt.microsec());
 
 	FILE* write_fp = ACE_OS::fopen(filename,ACE_TEXT("w"));
 
