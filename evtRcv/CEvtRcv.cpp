@@ -165,7 +165,7 @@ ACE_TString CEvtRcv::recognize_event(const timeval& tv, const device_packet_even
 	{
 		{
 			_s32 prev = -1;
-			for (auto i = e.id.begin(); i != e.id.end(); ++i){
+			for (std::vector<_s32>::const_iterator i = e.id.begin(); i != e.id.end(); ++i) {
 				if (*i != -1 && prev != -1 && *i != prev) {
 					is_multitouch = true;
 				}
