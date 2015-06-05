@@ -71,29 +71,6 @@ _u32 CEvtRcv::parseEvtPacket(device_packet_event* _event, char* pBuffer)
 	return len;
 }
 
-void CEvtRcv::unix_timeval_to_win32_systime(const timeval& in, LPSYSTEMTIME st)
-{
-	LONGLONG ll;
-	FILETIME ft;
-
-	//#define USING_TIMEVAL_TO_SYSTIME_GMT_9
-#ifdef USING_TIMEVAL_TO_SYSTIME_GMT_9
-	{
-		ll = Int32x32To64(in.tv_sec + (60 * 60 * 9), 10000000) + 116444736000000000LL;
-	}
-#else /*USING_TIMEVAL_TO_SYSTIME_GMT_9*/
-		{
-			ll = Int32x32To64(in.tv_sec, 10000000) + 116444736000000000LL;
-		}
-#endif /*USING_TIMEVAL_TO_SYSTIME_GMT_9*/
-
-		ft.dwLowDateTime = (DWORD)ll;
-		ft.dwHighDateTime = ll >> 32;
-
-		FileTimeToSystemTime(&ft, st);
-		st->wMilliseconds = (WORD)(in.tv_usec / 1000);
-}
-
 void CEvtRcv::OnEventCapture(char* pBuffer, _u32 len, const timeval& tv)
 {
 	device_packet_event e;
