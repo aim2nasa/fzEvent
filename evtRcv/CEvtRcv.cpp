@@ -348,10 +348,7 @@ void CEvtRcv::makeEventFile()
 		return;
 	}
 
-	ACE_Time_Value now(ACE_OS::gettimeofday());
-	ACE_Date_Time dt;
-	dt.update(now);
-
+	ACE_Date_Time dt(ACE_OS::gettimeofday());
 	ACE_TCHAR filename[512];
 	ACE_OS::sprintf(filename,ACE_TEXT("%s%s_%04d%02d%02d_%02d%02d%02d_%03d_RESULT.txt"),ACE_TEXT("PATH"),ACE_TEXT("_ID"),
 		dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), dt.second(), dt.microsec());
