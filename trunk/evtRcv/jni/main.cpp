@@ -17,6 +17,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 	ACE_TRACE(ACE_TEXT("main"));
 
+	ACE_LOG_MSG->priority_mask( LM_INFO|LM_ERROR, ACE_Log_Msg::PROCESS);
+
 	const char *server_host = argc > 1 ? argv[1] : SERVER_HOST;
 	u_short server_port = argc > 2 ? ACE_OS::atoi(argv[2]) : SERVER_PORT;
 
@@ -26,11 +28,11 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	ACE_INET_Addr remote_addr(server_port, server_host);
 	ACE_SOCK_Connector connector;
 
-	ACE_DEBUG((LM_DEBUG, "(%P|%t) Starting connect to %s: %d \n", remote_addr.get_host_name(), remote_addr.get_port_number()));
+	ACE_DEBUG((LM_INFO, "(%P|%t) Starting connect to %s: %d \n", remote_addr.get_host_name(), remote_addr.get_port_number()));
 	if (connector.connect(client_stream, remote_addr) == -1)
 		ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p \n", "connection failed"), -1);
 	else
-		ACE_DEBUG((LM_DEBUG, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
+		ACE_DEBUG((LM_INFO, "(%P|%t) connected to %s \n", remote_addr.get_host_name()));
 
 	ACE_OS::sleep(2);
 
@@ -61,18 +63,18 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_START)"), -1);
 			CEvtRcv::makeEventFile();
 			CEvtRcv::_sEventSequence = 0;	//event sequence √ ±‚»≠
-			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record start\n"));
+			ACE_DEBUG((LM_INFO, "(%P|%t) EVENT Record start\n"));
 			break;
 		case 't':
 			if (sendCmd(client_stream, CONTROL_MESSAGE_EVENT_RECORD_STOP) != sizeof(unsigned int))
 				ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) %p\n", "error sendCmd(CONTROL_MESSAGE_EVENT_RECORD_STOP)"), -1);
 			CEvtRcv::closeEventFile();
-			ACE_DEBUG((LM_DEBUG, "(%P|%t) EVENT Record stop\n"));
+			ACE_DEBUG((LM_INFO, "(%P|%t) EVENT Record stop\n"));
 			break;
 		case 'x':
 			bRun = false;
 			sendCmd(client_stream, CONTROL_MESSAGE_TERMINATE);
-			ACE_DEBUG((LM_DEBUG, "(%P|%t) terminate server\n"));
+			ACE_DEBUG((LM_INFO, "(%P|%t) terminate server\n"));
 			break;
 		default:
 			break;
